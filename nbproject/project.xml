@@ -6,9 +6,9 @@
             <name>lab7_v001</name>
             <creation-uuid>bde9b47d-c44e-4918-8a37-846654f63f6d</creation-uuid>
             <make-project-type>0</make-project-type>
-            <c-extensions/>
+            <c-extensions>c</c-extensions>
             <cpp-extensions/>
-            <header-extensions/>
+            <header-extensions>h</header-extensions>
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
