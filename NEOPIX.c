@@ -64,13 +64,13 @@ void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char
     
     
     for(i=7; i >= 0; --i){
-        if(r & (1<<i))
+        if(g & (1<<i))
             writeHighBit(high, low);
         else
             writeLowBit(high, low);
     }
     for(i=7; i >= 0; --i){
-        if(g & (1<<i))
+        if(r & (1<<i))
             writeHighBit(high, low);
         else
             writeLowBit(high, low);
