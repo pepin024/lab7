@@ -9,38 +9,36 @@
 
 
 typedef struct {
-    int pin;
+    uint8_t pin;
     int strandSize;
-    int initialized;
+    uint8_t brightness;
 } neopixel;
 
-neopixel activeNeopixels[16];//list of all neopixel objects
 /**
  * 
- * @param <b>matrixID: </b>Assigns an ID to the matrix being initialized
  * @param <b>pin: </b>Which pin[0:15] on PORTB is associated with the data line
  * @param <b>strandSize: </b> Number of neopixels in each matrix
+ * @param <b>brightness: </b> [0:255] 0 is unaltered, 255 is unaltered
  * 
  * <b>@Return: </b>Returns 1 if matrix is initialized properly and 0 if it isn't
  * 
- * <b>Description: </b>Each Neopixel matrix is assigned an ID which is used to
- * store needed information about each matrix
+ * <b>Description: </b>All 
  * 
  */
-int initMatrix(int matrixID, int pin, int strandSize){
-    if(activeNeopixels[matrixID].initialized == 1 || pin >= 16 || pin < 0){
-        return 1;
-    }
-    activeNeopixels[matrixID].initialized = 1;
-    activeNeopixels[matrixID].pin = pin;
-    activeNeopixels[matrixID].strandSize = strandSize;
+neopixel initMatrix( uint8_t pin, int strandSize){
+    neopixel foo;
+    foo.pin = pin;
+    if(pin > 15)
+        return 0;
+    foo.strandSize = strandSize;
+    foo.brightness = 255;
     AD1PCFG |= 0b0000111000111100; //Sets all AN pins on PORTB to function as digital pins
     TRISB &= (65535 - (1 << pin)); //Sets pin to output
-    return 0;
+    return foo;
 }
 
 
-int writeHighBit( int high, int low){
+void writeHighBit( int high, int low){
     
     //Interrupts are disabled so that a full port write can be done without worrying about the value of PORTB changing
     //A value is calculated for setting the bit hi and low and is written to the entire port
@@ -48,17 +46,44 @@ int writeHighBit( int high, int low){
     
     asm("mov w0,LATB \n repeat #8 \n nop \n mov w1,LATB");
     __builtin_disi(0x0000); //Enable interrupts.
-    return 0;
+    return;
     
 }
 
-int writeLowBit(int high, int low){
+void writeLowBit(int high, int low){
     
     //Interrupts are disabled so that a full port write can be done without worrying about the value of PORTB changing
     //A value is calculated for setting the bit hi and low and is written to the entire port
     __builtin_disi(0x3FFF);
     asm("mov w0,LATB \n repeat #1 \n nop\n mov w1,LATB ");
     __builtin_disi(0x0000); //Enable interrupts.
-    return 0;
+    return;
     
+}
+
+void writeColor(neopixel matrix, uint8_t r, uint8_t g, uint8_t b){
+    int pinMask = 1 << matrix.pin;
+    int high = PORTB | pinMask;
+    int low =  PORTB & (65535 - pinMask);
+    int i;
+    
+    
+    for(i=7; i >= 0; --i){
+        if(r & (1<<i))
+            writeHighBit(high, low);
+        else
+            writeLowBit(high, low);
+    }
+    for(i=7; i >= 0; --i){
+        if(g & (1<<i))
+            writeHighBit(high, low);
+        else
+            writeLowBit(high, low);
+    }
+    for(i=7; i >= 0; --i){
+        if(b & (1<<i))
+            writeHighBit(high, low);
+        else
+            writeLowBit(high, low);
+    }
 }

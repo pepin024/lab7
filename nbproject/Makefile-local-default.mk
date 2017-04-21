@@ -15,11 +15,11 @@
 # $ makeMP_CC="/opt/microchip/mplabc30/v3.30c/bin/pic30-gcc" ...  
 #
 SHELL=cmd.exe
-PATH_TO_IDE_BIN=C:/Program Files (x86)/Microchip/MPLABX/v3.51/mplab_ide/platform/../mplab_ide/modules/../../bin/
+PATH_TO_IDE_BIN=C:/Program Files (x86)/Microchip/MPLABX/v3.55/mplab_ide/platform/../mplab_ide/modules/../../bin/
 # Adding MPLAB X bin directory to path.
-PATH:=C:/Program Files (x86)/Microchip/MPLABX/v3.51/mplab_ide/platform/../mplab_ide/modules/../../bin/:$(PATH)
+PATH:=C:/Program Files (x86)/Microchip/MPLABX/v3.55/mplab_ide/platform/../mplab_ide/modules/../../bin/:$(PATH)
 # Path to java used to run MPLAB X when this makefile was created
-MP_JAVA_PATH="C:\Program Files (x86)\Microchip\MPLABX\v3.51\sys\java\jre1.8.0_91/bin/"
+MP_JAVA_PATH="C:\Program Files (x86)\Microchip\MPLABX\v3.55\sys\java\jre1.8.0_91/bin/"
 OS_CURRENT="$(shell uname -s)"
 MP_CC="C:\Program Files (x86)\Microchip\xc16\v1.30\bin\xc16-gcc.exe"
 # MP_CPPC is not defined

@@ -12,9 +12,9 @@
 extern "C" {
 #endif
 
-    int initMatrix(int matrixID, int pin, int strandSize);
-    int writeHighBit(int high, int low);
-    int writeLowBit(int high, int low);
+    neopixel initMatrix(int pin, int strandSize);
+    void writeHighBit(int high, int low);
+    void writeLowBit(int high, int low);
 
 
 #ifdef	__cplusplus
