@@ -6,13 +6,8 @@
 #include <p24Fxxxx.h>
 #include <stdint.h>
 #include <libpic30.h>
+#include "NEOPIX.h"
 
-
-typedef struct {
-    uint8_t pin;
-    int strandSize;
-    uint8_t brightness;
-} neopixel;
 
 /**
  * 
@@ -25,11 +20,11 @@ typedef struct {
  * <b>Description: </b>All 
  * 
  */
-neopixel initMatrix( uint8_t pin, int strandSize){
+neopixel initMatrix( char pin, int strandSize){
     neopixel foo;
     foo.pin = pin;
-    if(pin > 15)
-        return 0;
+    //if(pin > 15)
+    //    return 0;
     foo.strandSize = strandSize;
     foo.brightness = 255;
     AD1PCFG |= 0b0000111000111100; //Sets all AN pins on PORTB to function as digital pins
@@ -61,7 +56,7 @@ void writeLowBit(int high, int low){
     
 }
 
-void writeColor(neopixel matrix, uint8_t r, uint8_t g, uint8_t b){
+void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char b){
     int pinMask = 1 << matrix.pin;
     int high = PORTB | pinMask;
     int low =  PORTB & (65535 - pinMask);

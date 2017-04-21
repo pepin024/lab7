@@ -26,71 +26,24 @@
 // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
+ neopixel leftEye, rightEye;
+
 void setup(void) {
     CLKDIVbits.RCDIV = 0;
-    initMatrix(0, 6, 40);
     
-    TRISBbits.TRISB5 = 0;
-    LATBbits.LATB5 = 0;
     
-    int i;
-    LATBbits.LATB5 = 1;
-    int pinMask = 1 << 6;
-    int hi = PORTB | pinMask;
-    int low =  PORTB & (65535 - pinMask);
-    asm("nop");
-    LATBbits.LATB5 = 1;
-    for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
+    leftEye = initMatrix(5, 5);
+    rightEye = initMatrix(6, 5);
     asm("nop");
     
     return;
 }
 
 void loop(void) {
-    int pinMask = 1 << 6;
-    int hi = PORTB | pinMask;
-    int low =  PORTB & (65535 - pinMask);
-    int i;
-    asm("nop");
-    LATBbits.LATB5 = 1;
-    for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-    //__delay_ms(2000);
-    for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-    //__delay_ms(2000);
-    
-    for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
+    writeColor(leftEye, 255, 0, 0);
+    writeColor(leftEye, 0, 255, 0);
+    writeColor(leftEye, 0, 0, 255);
+    writeColor(leftEye, 255, 255, 0);
     __delay_ms(2000);
     return;
 }
