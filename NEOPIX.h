@@ -24,6 +24,7 @@ extern "C" {
     void writeHighBit(int high, int low);
     void writeLowBit(int high, int low);
     void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char b);
+    void sendColor(neopixel matrix, unsigned char colorArray[][3], unsigned char matrixArray[]);
 
 
 #ifdef	__cplusplus

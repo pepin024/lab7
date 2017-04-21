@@ -82,3 +82,17 @@ void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char
             writeLowBit(high, low);
     }
 }
+
+void sendColor(neopixel matrix, unsigned char colorArray[][3], unsigned char matrixArray[])
+{
+    int length = matrix.strandSize;
+    int i;
+    unsigned char red, green, blue;
+    for (i=0; i<length; i++)
+    {
+        red = colorArray[matrixArray[i]][0];
+        blue = colorArray[matrixArray[i]][1];
+        green = colorArray[matrixArray[i]][2];
+        writeColor(matrix, red, green, blue);
+    }
+}
