@@ -12,9 +12,18 @@
 extern "C" {
 #endif
 
-    int initMatrix(int matrixID, int pin, int strandSize);
-    int writeHighBit(int high, int low);
-    int writeLowBit(int high, int low);
+    struct neopixelTag ;
+
+    typedef struct neopixelTag{
+        char pin;
+        int strandSize;
+        char brightness;
+    } neopixel;
+    
+    neopixel initMatrix( char pin, int strandSize);
+    void writeHighBit(int high, int low);
+    void writeLowBit(int high, int low);
+    void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char b);
 
 
 #ifdef	__cplusplus
@@ -22,4 +31,3 @@ extern "C" {
 #endif
 
 #endif	/* NEOPIX_H */
-
