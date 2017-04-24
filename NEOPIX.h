@@ -17,7 +17,7 @@ extern "C" {
     typedef struct neopixelTag{
         char pin;
         int strandSize;
-        char brightness;
+        unsigned char brightness;
     } neopixel;
     
     neopixel initMatrix( char pin, int strandSize);

@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p24FJ64GA002 \
   -o \
-  dist/default/production/lab7.production.elf \
+  dist/default/production/lab7_v001.X.production.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.30/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../support/PIC24E/gld \
@@ -31,7 +31,7 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/lab7.production.map \
+  -Map=dist/default/production/lab7_v001.X.production.map \
   --report-mem \
   --memorysummary \
   dist/default/production/memoryfile.xml \
@@ -52,7 +52,7 @@ c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normal.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                              build/default/production/main.o (___delay32)
+                              build/default/production/NEOPIX.o (___delay32)
 
 
 xc16-ld 1.30 (A)
@@ -62,11 +62,12 @@ Program Memory  [Origin = 0x200, Length = 0xa9fc]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xce           0x135  (309)
-.text                        0x2ce               0x384           0x546  (1350)
-.init.delay32                0x652                0x1c            0x2a  (42)
-.dinit                       0x66e                 0x8             0xc  (12)
+.const                       0x2ce                 0xa             0xf  (15)
+.text                        0x2d8               0x3c6           0x5a9  (1449)
+.init.delay32                0x69e                0x1c            0x2a  (42)
+.dinit                       0x6ba                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):          0x6b1  (1713) 2%
+                 Total program memory used (bytes):          0x723  (1827) 2%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -111,44 +112,44 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init_standard
                   0x000252                  __data_init
                   0x0002c8                  __DefaultInterrupt
-                  0x0002ce                  _initMatrix
-                  0x000304                  _setBrightness
-                  0x000314                  _writeHighBit
-                  0x000326                  _writeLowBit
-                  0x000338                  _writeColor
-                  0x00042a                  _sendColor
-                  0x000480                  _initColorArray
-                  0x000548                  _setIndexPacked
-                  0x000588                  _getR
-                  0x0005a0                  _getG
-                  0x0005be                  _getB
-                  0x0005d4                  _setup
-                  0x000608                  _loop
-                  0x00060e                  _main
-                  0x000652                  ___delay32
+                  0x0002d8                  _initMatrix
+                  0x00030e                  _setBrightness
+                  0x000324                  _writeHighBit
+                  0x000336                  _writeLowBit
+                  0x000348                  _writeColor
+                  0x00043a                  _sendColor
+                  0x000496                  _initColorArray
+                  0x00055e                  _setIndexPacked
+                  0x00059e                  _getR
+                  0x0005b6                  _getG
+                  0x0005d4                  _getB
+                  0x0005ea                  _setup
+                  0x00061e                  _loop
+                  0x000624                  _main
+                  0x00069e                  ___delay32
 
 External Symbols in Program Memory (by name):
 
                   0x0002c8                  __DefaultInterrupt
-                  0x000652                  ___delay32
+                  0x00069e                  ___delay32
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0005be                  _getB
-                  0x0005a0                  _getG
-                  0x000588                  _getR
-                  0x000480                  _initColorArray
-                  0x0002ce                  _initMatrix
-                  0x000608                  _loop
-                  0x00060e                  _main
-                  0x00042a                  _sendColor
-                  0x000304                  _setBrightness
-                  0x000548                  _setIndexPacked
-                  0x0005d4                  _setup
-                  0x000338                  _writeColor
-                  0x000314                  _writeHighBit
-                  0x000326                  _writeLowBit
+                  0x0005d4                  _getB
+                  0x0005b6                  _getG
+                  0x00059e                  _getR
+                  0x000496                  _initColorArray
+                  0x0002d8                  _initMatrix
+                  0x00061e                  _loop
+                  0x000624                  _main
+                  0x00043a                  _sendColor
+                  0x00030e                  _setBrightness
+                  0x00055e                  _setIndexPacked
+                  0x0005ea                  _setup
+                  0x000348                  _writeColor
+                  0x000324                  _writeHighBit
+                  0x000336                  _writeLowBit
 
 Memory Configuration
 
@@ -222,11 +223,11 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000        0x94e
+.debug_info       0x000000        0x9c7
  *(.debug_info)
- .debug_info      0x000000        0x40f build/default/production/NEOPIX.o
- .debug_info      0x00040f        0x33c build/default/production/main.o
- .debug_info      0x00074b        0x203 build/default/production/colorIndex.o
+ .debug_info      0x000000        0x415 build/default/production/NEOPIX.o
+ .debug_info      0x000415        0x3a9 build/default/production/main.o
+ .debug_info      0x0007be        0x209 build/default/production/colorIndex.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x2b4
@@ -235,11 +236,11 @@ __CONFIG1
  .debug_abbrev    0x0000d7        0x150 build/default/production/main.o
  .debug_abbrev    0x000227         0x8d build/default/production/colorIndex.o
 
-.debug_line       0x000000        0x1e7
+.debug_line       0x000000        0x1ee
  *(.debug_line)
- .debug_line      0x000000         0xd7 build/default/production/NEOPIX.o
- .debug_line      0x0000d7         0xb4 build/default/production/main.o
- .debug_line      0x00018b         0x5c build/default/production/colorIndex.o
+ .debug_line      0x000000         0xd8 build/default/production/NEOPIX.o
+ .debug_line      0x0000d8         0xba build/default/production/main.o
+ .debug_line      0x000192         0x5c build/default/production/colorIndex.o
 
 .debug_frame      0x000000        0x1c4
  *(.debug_frame)
@@ -861,7 +862,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/lab7.production.elf elf32-pic30)
+OUTPUT(dist/default/production/lab7_v001.X.production.elf elf32-pic30)
 LOAD default_isr
 LOAD data_init
 
@@ -901,28 +902,31 @@ __c30_signature
 .config_IESO      0x00abfc          0x2
  .config_IESO     0x00abfc          0x2 build/default/production/main.o
 
-.text             0x0002ce        0x384
- .text            0x0002ce        0x1b2 build/default/production/NEOPIX.o
-                  0x0002ce                  _initMatrix
-                  0x000304                  _setBrightness
-                  0x000314                  _writeHighBit
-                  0x000326                  _writeLowBit
-                  0x000338                  _writeColor
-                  0x00042a                  _sendColor
- .text            0x000480        0x154 build/default/production/colorIndex.o
-                  0x000480                  _initColorArray
-                  0x000548                  _setIndexPacked
-                  0x000588                  _getR
-                  0x0005a0                  _getG
-                  0x0005be                  _getB
- .text            0x0005d4         0x7e build/default/production/main.o
-                  0x0005d4                  _setup
-                  0x000608                  _loop
-                  0x00060e                  _main
+.const              0x82ce          0xa load address 0x0002ce  
+ .const             0x82ce          0xa build/default/production/main.o
 
-.init.delay32     0x000652         0x1c
- .init.delay32    0x000652         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x000652                  ___delay32
+.text             0x0002d8        0x3c6
+ .text            0x0002d8        0x1be build/default/production/NEOPIX.o
+                  0x0002d8                  _initMatrix
+                  0x00030e                  _setBrightness
+                  0x000324                  _writeHighBit
+                  0x000336                  _writeLowBit
+                  0x000348                  _writeColor
+                  0x00043a                  _sendColor
+ .text            0x000496        0x154 build/default/production/colorIndex.o
+                  0x000496                  _initColorArray
+                  0x00055e                  _setIndexPacked
+                  0x00059e                  _getR
+                  0x0005b6                  _getG
+                  0x0005d4                  _getB
+ .text            0x0005ea         0xb4 build/default/production/main.o
+                  0x0005ea                  _setup
+                  0x00061e                  _loop
+                  0x000624                  _main
 
-.dinit            0x00066e          0x8
- .dinit           0x00066e          0x8 data_init
+.init.delay32     0x00069e         0x1c
+ .init.delay32    0x00069e         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x00069e                  ___delay32
+
+.dinit            0x0006ba          0x8
+ .dinit           0x0006ba          0x8 data_init

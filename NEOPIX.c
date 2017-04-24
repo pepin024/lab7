@@ -14,12 +14,6 @@
  * 
  * @param <b>pin: </b>Which pin[0:15] on PORTB is associated with the data line
  * @param <b>strandSize: </b> Number of neopixels in each matrix
- * @param <b>brightness: </b> [0:255] 0 is unaltered, 255 is unaltered
- * 
- * <b>@Return: </b>Returns 1 if matrix is initialized properly and 0 if it isn't
- * 
- * <b>Description: </b>All 
- * 
  */
 neopixel initMatrix(char pin, int strandSize){
     neopixel foo;
@@ -35,7 +29,7 @@ neopixel initMatrix(char pin, int strandSize){
 
 void setBrightness(neopixel *matrix, unsigned char brightness)
 {
-    matrix->brightness = brightness;
+    matrix->brightness = ++brightness;
     return;
 }
 
@@ -112,4 +106,5 @@ void sendColor(neopixel *matrix, unsigned long int colorArray[], unsigned char m
         
         writeColor(matrix, red, green, blue);
     }
+    __delay_us(10);//latch the colors into the matrix
 }

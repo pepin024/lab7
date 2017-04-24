@@ -33,8 +33,8 @@ void setup(void) { //initializer function
     CLKDIVbits.RCDIV = 0; // sets clock speed to 16MHz
     
     
-    leftEye = initMatrix(5, 5); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
-    rightEye = initMatrix(6, 5);//initializes right eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    leftEye = initMatrix(6, 5); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    rightEye = initMatrix(5, 5);//initializes right eye to pin 6 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
     asm("nop");
     
     return;
@@ -48,24 +48,32 @@ void loop(void)
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
     unsigned char array[5];
+    unsigned char blank[6] = {0,0,0,0,0,0};
+    unsigned long testPallete[] = {0xff0000, 0x00ff00, 0xff};
     array[0]= 4;
     array[1]=2;
     array[2]=1;
     array[3]=15;
     array[4]=15;
+    unsigned char array2[5] = {3, 5, 6, 1, 1};
     unsigned long int colorArray[32];
+    unsigned char test[] = {0,1,2,0,1};
     initColorArray(colorArray);
     setBrightness(&rightEye, 120);
-    setBrightness(&leftEye, 120);
+    setBrightness(&leftEye, 255);
     
     while (1) {
-        /*sendColor(&rightEye, colorArray, array);
+        //sendColor(&leftEye, colorArray, blank);
+        //sendColor(&rightEye, colorArray, array);
         __delay_ms(500);
-        //sendColor(&leftEye, colorArray, array);
-        __delay_ms(500);*/
+        //sendColor(&leftEye, colorArray, array2);
+        //sendColor(&rightEye, colorArray, blank);
+        __delay_ms(500);
         
-        writeColor(&rightEye, 255, 0, 0);
-        writeColor(&rightEye, 0, 255, 0);
+        sendColor(&leftEye, testPallete, test);
+        //writeColor(&rightEye, 255, 0, 0);
+        //writeColor(&rightEye, 0, 255, 0);
+        //writeColor(&rightEye, 0, 0, 255);
         __delay_ms(5);
     }
 
