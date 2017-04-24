@@ -1,5 +1,5 @@
 #ifndef FCY
-#define FCY 16000000
+#define FCY 16000000 //Frequency of MCU
 #endif
 
 #include <p24Fxxxx.h>
@@ -27,80 +27,65 @@
 // Fail-Safe Clock Monitor is enabled)
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
-void setup(void) {
-    CLKDIVbits.RCDIV = 0;
-    initMatrix(6, 40);
+neopixel leftEye, rightEye; //these represent each LED matrix, they are of the neopixel Struct type defined in the NEOPIX.h
+
+void setup(void) { //initializer function
+    CLKDIVbits.RCDIV = 0; // sets clock speed to 16MHz
     
-    TRISBbits.TRISB5 = 0;
-    LATBbits.LATB5 = 0;
     
-    int i;
-    LATBbits.LATB5 = 1;
-    int pinMask = 1 << 6;
-    int hi = PORTB | pinMask;
-    int low =  PORTB & (65535 - pinMask);
-    asm("nop");
-    LATBbits.LATB5 = 1;
-    for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
+    leftEye = initMatrix(5, 5); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    rightEye = initMatrix(6, 5);//initializes right eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
     asm("nop");
     
     return;
 }
 
 void loop(void) {
-    int pinMask = 1 << 6;
-    int hi = PORTB | pinMask;
-    int low =  PORTB & (65535 - pinMask);
+    int pinMask = 1 << 6; // used for pin 6
+    int hi = PORTB | pinMask; //only changes RB6 to high keeps the rest of PORTB as stable
+    int low =  PORTB & (65535 - pinMask);//only changes RB6 to low keeps the rest of PORTB as stable
     int i;
     asm("nop");
     LATBbits.LATB5 = 1;
-    for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-    //__delay_ms(2000);
-    for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-    //__delay_ms(2000);
-    
-    for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeLowBit(hi, low);
-    }
-     for(i = 8; i > 0; --i){
-        writeHighBit(hi, low);
-    }
-    __delay_ms(2000);
-    
+//    for(i = 8; i > 0; --i){
+//        writeHighBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//    //__delay_ms(2000);
+//    for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeHighBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//    //__delay_ms(2000);
+//    
+//    for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeLowBit(hi, low);
+//    }
+//     for(i = 8; i > 0; --i){
+//        writeHighBit(hi, low);
+//    }
+//    __delay_ms(2000);
+//    
     
     
     return;
 }
 
 int main(void) {
-    setup();
+    setup(); //calls our setup function above to set leftEye and rightEye.
     unsigned char array[10] = {1,2,3,4,5,6,7,8,9,10};
     unsigned char* colorArray;
     colorArray = initColorArray();

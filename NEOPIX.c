@@ -56,8 +56,8 @@ void writeLowBit(int high, int low){
     
 }
 
-void writeColor(neopixel matrix, unsigned char r, unsigned char g, unsigned char b){
-    int pinMask = 1 << matrix.pin;
+void writeColor(neopixel *matrix, unsigned char r, unsigned char g, unsigned char b){
+    int pinMask = 1 << matrix->pin;
     int high = PORTB | pinMask;
     int low =  PORTB & (65535 - pinMask);
     int i;
