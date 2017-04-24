@@ -40,11 +40,32 @@ void setup(void) {
 }
 
 void loop(void) {
-    writeColor(leftEye, 255, 0, 0);
-    writeColor(leftEye, 0, 255, 0);
-    writeColor(leftEye, 0, 0, 255);
-    writeColor(leftEye, 255, 255, 0);
-    __delay_ms(2000);
+    unsigned char i;
+    for(i = 255; i >= 0; --i){
+        setBrigthness( &leftEye, i);
+        writeColor(&leftEye, 255, 0, 0);
+        writeColor(&leftEye, 0, 255, 0);
+        writeColor(&leftEye, 0, 0, 255);
+        writeColor(&leftEye, 255, 255, 0);
+    
+        writeColor(&rightEye, 0, 0, 0);
+        writeColor(&rightEye, 0, 0, 0);
+        writeColor(&rightEye, 0, 0, 0);
+        writeColor(&rightEye, 0, 0, 0);
+        __delay_ms(2);
+        writeColor(&leftEye, 0, 0, 0);
+        writeColor(&leftEye, 0, 0, 0);
+        writeColor(&leftEye, 0, 0, 0);
+        writeColor(&leftEye, 0, 0, 0);
+        
+        writeColor(&rightEye, 255, 255, 0);
+        writeColor(&rightEye, 0, 255, 255);
+        writeColor(&rightEye, 255, 0, 255);
+        writeColor(&rightEye, 255, 255, 255);
+    
+       
+        __delay_ms(2);
+    }
     return;
 }
 
