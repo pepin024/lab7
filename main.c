@@ -5,6 +5,7 @@
 #include <p24Fxxxx.h>
 #include <xc.h>
 #include <libpic30.h>
+#include "colorIndexHead.h"
 #include "NEOPIX.h"
 
 // PIC24FJ64GA002 Configuration Bit Settings
@@ -28,7 +29,7 @@
 
 void setup(void) {
     CLKDIVbits.RCDIV = 0;
-    initMatrix(0, 6, 40);
+    initMatrix(6, 40);
     
     TRISBbits.TRISB5 = 0;
     LATBbits.LATB5 = 0;
@@ -92,13 +93,22 @@ void loop(void) {
         writeHighBit(hi, low);
     }
     __delay_ms(2000);
+    
+    
+    
     return;
 }
 
 int main(void) {
     setup();
+    unsigned char array[10] = {1,2,3,4,5,6,7,8,9,10};
+    unsigned char* colorArray;
+    colorArray = initColorArray();
+    neopixel eye = initMatrix(6,10);
+    
     while (1) {
-        loop();
+        sendColor(eye, colorArray, array);
+        __delay_ms(2000);
     }
 
 }

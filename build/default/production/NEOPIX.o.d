@@ -1,2 +1,3 @@
 build/default/production/NEOPIX.o:  \
-NEOPIX.c 
+NEOPIX.c  \
+NEOPIX.h 

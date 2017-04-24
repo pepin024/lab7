@@ -11,7 +11,7 @@
 unsigned char colorArray[32][3]; //colorArray will hold 16 default colors and 16 extra spaces for user colors.
                                  //Matrix to be output will hold an index to this colorArray.
 
-void initColorArray(void)
+unsigned char* initColorArray(void)
 {
     setIndex(0, 0, 0, 0); //BLACK
     setIndex(1, 0, 0, 170); //BLUE
@@ -29,6 +29,7 @@ void initColorArray(void)
     setIndex(13, 255, 85, 255); //BRIGHT MAGENTA
     setIndex(14, 255, 255, 85); //BRIGHT YELLOW
     setIndex(15, 255, 255, 255); //WHITE
+    return colorArray;
 }
 
 void setIndex(unsigned char index, char red, char grn, char blu)

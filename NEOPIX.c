@@ -20,7 +20,7 @@
  * <b>Description: </b>All 
  * 
  */
-neopixel initMatrix( char pin, int strandSize){
+neopixel initMatrix(char pin, int strandSize){
     neopixel foo;
     foo.pin = pin;
     //if(pin > 15)

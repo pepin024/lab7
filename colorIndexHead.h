@@ -16,7 +16,7 @@ extern "C" {
     unsigned char getR(unsigned char index);
     unsigned char getG(unsigned char index);
     unsigned char getB(unsigned char index);
-    void initColorArray(void);
+    unsigned char* initColorArray(void);
     long getColor(unsigned char index);
 
 
