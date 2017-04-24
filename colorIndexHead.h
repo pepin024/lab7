@@ -11,13 +11,11 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    void setIndex(unsigned char index, char red, char grn, char blu);
-    void setIndexPacked(unsigned char index, long packedCol);
-    unsigned char getR(unsigned char index);
-    unsigned char getG(unsigned char index);
-    unsigned char getB(unsigned char index);
-    unsigned char* initColorArray(void);
-    long getColor(unsigned char index);
+    void setIndexPacked(unsigned char index, unsigned char red, unsigned char blu, unsigned char grn, unsigned long int ac[]);
+    unsigned char getR(unsigned char index, unsigned long int ac[]);
+    unsigned char getG(unsigned char index, unsigned long int ac[]);
+    unsigned char getB(unsigned char index, unsigned long int ac[]);
+    void initColorArray(unsigned long int ac[]);
 
 
 

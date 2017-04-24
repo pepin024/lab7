@@ -40,60 +40,33 @@ void setup(void) { //initializer function
     return;
 }
 
-void loop(void) {
-    int pinMask = 1 << 6; // used for pin 6
-    int hi = PORTB | pinMask; //only changes RB6 to high keeps the rest of PORTB as stable
-    int low =  PORTB & (65535 - pinMask);//only changes RB6 to low keeps the rest of PORTB as stable
-    int i;
-    asm("nop");
-    LATBbits.LATB5 = 1;
-//    for(i = 8; i > 0; --i){
-//        writeHighBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//    //__delay_ms(2000);
-//    for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeHighBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//    //__delay_ms(2000);
-//    
-//    for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeLowBit(hi, low);
-//    }
-//     for(i = 8; i > 0; --i){
-//        writeHighBit(hi, low);
-//    }
-//    __delay_ms(2000);
-//    
-    
-    
+void loop(void) 
+{
     return;
 }
 
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
-    unsigned char array[10] = {1,2,3,4,5,6,7,8,9,10};
-    unsigned char* colorArray;
-    colorArray = initColorArray();
-    neopixel eye = initMatrix(6,10);
+    unsigned char array[5];
+    array[0]= 4;
+    array[1]=2;
+    array[2]=1;
+    array[3]=15;
+    array[4]=15;
+    unsigned long int colorArray[32];
+    initColorArray(colorArray);
+    setBrightness(&rightEye, 120);
+    setBrightness(&leftEye, 120);
     
     while (1) {
-        sendColor(eye, colorArray, array);
-        __delay_ms(2000);
+        /*sendColor(&rightEye, colorArray, array);
+        __delay_ms(500);
+        //sendColor(&leftEye, colorArray, array);
+        __delay_ms(500);*/
+        
+        writeColor(&rightEye, 255, 0, 0);
+        writeColor(&rightEye, 0, 255, 0);
+        __delay_ms(5);
     }
 
 }
