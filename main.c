@@ -5,6 +5,8 @@
 #include <p24Fxxxx.h>
 #include <xc.h>
 #include <libpic30.h>
+#include "../pepin024_lab6_v002.X/pepin024_lab6_LCD_v001.h"
+#include "../pepin024_lab6_v002.X/pepin024_lab6_DELAY_v001.h"
 #include "NEOPIX.h"
 
 // PIC24FJ64GA002 Configuration Bit Settings
@@ -42,7 +44,7 @@ void setup(void) {
 void loop(void) {
     unsigned char i;
     for(i = 255; i >= 0; --i){
-        setBrigthness( &leftEye, i);
+        setBrightness( &leftEye, i);
         writeColor(&leftEye, 255, 0, 0);
         writeColor(&leftEye, 0, 255, 0);
         writeColor(&leftEye, 0, 0, 255);

@@ -81,7 +81,7 @@ void writeColor(neopixel *matrix, unsigned char r, unsigned char g, unsigned cha
     __builtin_disi(0x0000); //Enable interrupts.
 }
 
-void setBrigthness(neopixel *matrix, unsigned char brightness){
+void setBrightness(neopixel *matrix, unsigned char brightness){
     matrix->brightness = brightness;
     return;
 }
