@@ -12,6 +12,13 @@
 extern "C" {
 #endif
 
+    struct controllerData{
+        unsigned char joyX;
+        unsigned char joyY;
+        unsigned char c;
+        unsigned char z;
+    };
+    
     void nunchuckInit();
     void beginTransmission(unsigned char deviceAddress);
     void send(unsigned char command);

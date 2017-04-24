@@ -53,3 +53,11 @@ void endTransmission(){
     while(I2C2CONbits.PEN == 1);
     return;
 }
+
+unsigned char readByte(){
+    IFS3bits.MI2C2IF = 0;
+    I2C2CONbits.RCEN = 1;
+    while(IFS3bits == 0);
+    return I2C2RCV;
+}
+
