@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=NEOPIX.c main.c colorIndex.c
+SOURCEFILES_QUOTED_IF_SPACED=NEOPIX.c main.c colorIndex.c inputs.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/NEOPIX.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/colorIndex.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/inputs.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/NEOPIX.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/colorIndex.o.d ${OBJECTDIR}/inputs.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o
+OBJECTFILES=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/inputs.o
 
 # Source Files
-SOURCEFILES=NEOPIX.c main.c colorIndex.c
+SOURCEFILES=NEOPIX.c main.c colorIndex.c inputs.c
 
 
 CFLAGS=
@@ -109,6 +109,13 @@ ${OBJECTDIR}/colorIndex.o: colorIndex.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  colorIndex.c  -o ${OBJECTDIR}/colorIndex.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/colorIndex.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/colorIndex.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/inputs.o: inputs.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/inputs.o.d 
+	@${RM} ${OBJECTDIR}/inputs.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  inputs.c  -o ${OBJECTDIR}/inputs.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/inputs.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/inputs.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/NEOPIX.o: NEOPIX.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -130,6 +137,13 @@ ${OBJECTDIR}/colorIndex.o: colorIndex.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/colorIndex.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  colorIndex.c  -o ${OBJECTDIR}/colorIndex.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/colorIndex.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/colorIndex.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/inputs.o: inputs.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/inputs.o.d 
+	@${RM} ${OBJECTDIR}/inputs.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  inputs.c  -o ${OBJECTDIR}/inputs.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/inputs.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/inputs.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

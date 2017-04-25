@@ -5,8 +5,10 @@
 #include <p24Fxxxx.h>
 #include <xc.h>
 #include <libpic30.h>
+#include <p24FJ64GA002.h>
 #include "colorIndexHead.h"
 #include "NEOPIX.h"
+#include "inputs.h"
 
 // PIC24FJ64GA002 Configuration Bit Settings
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
@@ -35,6 +37,7 @@ void setup(void) { //initializer function
     
     leftEye = initMatrix(6, 5); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
     rightEye = initMatrix(5, 5);//initializes right eye to pin 6 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    inputInit();
     asm("nop");
     
     return;
@@ -53,16 +56,29 @@ int main(void) {
     array[2]=1;
     array[3]=15;
     array[4]=5;
+    unsigned char test1[5] = {0, 1, 2, 3, 4};
+    unsigned char blank[5] = {0, 0, 0, 0, 0};
     unsigned long int colorArray[32];
     initColorArray(colorArray);
     setBrightness(&rightEye, 60);
     setBrightness(&leftEye, 60);
     
+    controllerData buttons;
+    
     while (1) 
     {
-        sendColor(&rightEye, colorArray, array);
+        buttons = scanInputs();
+        setBrightness(&rightEye, buttons.joyX >> 2);
+        //setBrightness(&leftEye, buttons.joyY >> 2);
+        if(buttons.c)
+            sendColor(&rightEye, colorArray, array);
+        else
+            sendColor(&rightEye, colorArray, test1);
         __delay_ms(5);
-        sendColor(&leftEye, colorArray, array); //sendColor takes 952 cycles between each write color
+        if(buttons.z)
+            sendColor(&leftEye, colorArray, array); //sendColor takes 952 cycles between each write color
+        else
+            sendColor(&leftEye, colorArray, blank);
         __delay_ms(5);
     }
 
