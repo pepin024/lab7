@@ -11,18 +11,24 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-    struct controllerData{
+    struct controller;
+    
+    typedef struct controller{
         unsigned char joyX;
         unsigned char joyY;
         unsigned char c;
         unsigned char z;
-    };
+        int accelX;
+        int accelY;
+        int accelZ;
+    } controllerData;
     
     void nunchuckInit();
     void beginTransmission(unsigned char deviceAddress);
     void send(unsigned char command);
     void endTransmission();
+    unsigned char readByte();
+    controllerData getControllerData();
 
 
 

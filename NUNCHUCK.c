@@ -5,6 +5,7 @@
 #include <xc.h>
 #include <p24Fxxxx.h>
 #include <libpic30.h>
+#include <p24FJ64GA002.h>
 #include "NUNCHUCK.h"
 
 #define WRITEADDRESS 0xA4
@@ -41,6 +42,7 @@ void beginTransmission(unsigned char deviceAddress){
 }
 
 void send(unsigned char command){
+    TRISBbits.TRISB2 = 0;
     IFS3bits.MI2C2IF = 0;
     I2C2TRN = command;
     while(IFS3bits.MI2C2IF == 0);
@@ -55,9 +57,68 @@ void endTransmission(){
 }
 
 unsigned char readByte(){
+    TRISBbits.TRISB2 = 1;
     IFS3bits.MI2C2IF = 0;
     I2C2CONbits.RCEN = 1;
-    while(IFS3bits == 0);
+    while(IFS3bits.MI2C2IF == 0);
+    IFS3bits.MI2C2IF = 0;
     return I2C2RCV;
+}
+
+controllerData getControllerData(){
+    controllerData foo;
+    
+    beginTransmission(WRITEADDRESS);
+    send(0x00);
+    endTransmission();
+    
+    int i = 0;
+    unsigned char temp[6];
+        
+    beginTransmission(READADDRESS);
+    temp[i++] = readByte();
+    I2C2CONbits.ACKDT = 0;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    temp[i++] = readByte();
+    I2C2CONbits.ACKDT = 0;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    temp[i++] = readByte();
+    I2C2CONbits.ACKDT = 0;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    temp[i++] = readByte();
+    I2C2CONbits.ACKDT = 0;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    temp[i++] = readByte();
+    I2C2CONbits.ACKDT = 0;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    temp[i] = readByte();
+    I2C2CONbits.ACKDT = 1;
+    I2C2CONbits.ACKEN = 1;
+    while(I2C2CONbits.ACKEN);
+    
+    endTransmission();
+    
+    for(i = 0; i < 6; ++i)
+    temp[i] = (temp[i] ^ 0x17) + 0x17;
+    
+    foo.joyX = temp[0];
+    foo.joyY = temp[1];
+    foo.accelX = (temp[2] << 2) | ((temp[5] >> 6) & 0b11);
+    foo.accelY = (temp[3] << 2) | ((temp[5] >> 4) & 0b11);
+    foo.accelZ = (temp[4] << 2) | ((temp[5] >> 2) & 0b11);
+    foo.c = !(temp[5] & 0b10);
+    foo.z = !(temp[5 & 0b1]);
+    
+    return foo;
 }
 
