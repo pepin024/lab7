@@ -52,7 +52,7 @@ int main(void) {
     array[1]=2;
     array[2]=1;
     array[3]=15;
-    array[4]=15;
+    array[4]=5;
     unsigned long int colorArray[32];
     initColorArray(colorArray);
     setBrightness(&rightEye, 60);

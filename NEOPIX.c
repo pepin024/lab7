@@ -85,7 +85,7 @@ void writeColor(neopixel *matrix, unsigned char displayArray[])
             else
                 writeLowBit(high, low);
         }
-        b = displayArray[(j*3)+1];
+        b = displayArray[(j*3)+2];
         for(i=7; i >= 0; --i)
         {
             if(b & (1<<i))
