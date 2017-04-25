@@ -11,7 +11,7 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    void setIndexPacked(unsigned char index, unsigned char red, unsigned char blu, unsigned char grn, unsigned long int ac[]);
+    void setIndexPacked(unsigned char index, unsigned char red, unsigned char grn, unsigned char blu, unsigned long int ac[]);
     unsigned char getR(unsigned char index, unsigned long int ac[]);
     unsigned char getG(unsigned char index, unsigned long int ac[]);
     unsigned char getB(unsigned char index, unsigned long int ac[]);
