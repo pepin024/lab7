@@ -17,13 +17,13 @@ extern "C" {
     typedef struct neopixelTag{
         char pin;
         int strandSize;
-        unsigned char brightness;
+        char brightness;
     } neopixel;
     
     neopixel initMatrix( char pin, int strandSize);
     void writeHighBit(int high, int low);
     void writeLowBit(int high, int low);
-    void writeColor(neopixel *matrix, unsigned char r, unsigned char g, unsigned char b);
+    void writeColor(neopixel *matrix, unsigned char displayArray[]);
     void sendColor(neopixel *matrix, unsigned long int colorArray[], unsigned char matrixArray[]);
     void setBrightness(neopixel *matrix, unsigned char brightness);
 

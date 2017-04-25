@@ -48,32 +48,21 @@ void loop(void)
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
     unsigned char array[5];
-    unsigned char blank[6] = {0,0,0,0,0,0};
-    unsigned long testPallete[] = {0xff0000, 0x00ff00, 0xff};
     array[0]= 4;
     array[1]=2;
     array[2]=1;
     array[3]=15;
     array[4]=15;
-    unsigned char array2[5] = {3, 5, 6, 1, 1};
     unsigned long int colorArray[32];
-    unsigned char test[] = {0,1,2,0,1};
     initColorArray(colorArray);
-    setBrightness(&rightEye, 120);
-    setBrightness(&leftEye, 255);
+    setBrightness(&rightEye, 60);
+    setBrightness(&leftEye, 60);
     
-    while (1) {
-        //sendColor(&leftEye, colorArray, blank);
-        //sendColor(&rightEye, colorArray, array);
-        __delay_ms(500);
-        //sendColor(&leftEye, colorArray, array2);
-        //sendColor(&rightEye, colorArray, blank);
-        __delay_ms(500);
-        
-        sendColor(&leftEye, testPallete, test);
-        //writeColor(&rightEye, 255, 0, 0);
-        //writeColor(&rightEye, 0, 255, 0);
-        //writeColor(&rightEye, 0, 0, 255);
+    while (1) 
+    {
+        sendColor(&rightEye, colorArray, array);
+        __delay_ms(5);
+        sendColor(&leftEye, colorArray, array); //sendColor takes 952 cycles between each write color
         __delay_ms(5);
     }
 
