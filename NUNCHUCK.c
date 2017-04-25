@@ -7,11 +7,17 @@
 #include <libpic30.h>
 #include <p24FJ64GA002.h>
 #include "NUNCHUCK.h"
+#include "drvI2C.h"
 
+#define SLAVEADDRESS 0x52
 #define WRITEADDRESS 0xA4
 #define READADDRESS 0xA5
 
+//#define MYCODE
+
 void nunchuckInit(){
+    
+#ifdef MYCODE
     AD1PCFGbits.PCFG4 = 1; //Sets SDA2/SCL2 as digital
     AD1PCFGbits.PCFG5 = 1;
     //RB3 = SCL2, RB2 = SDA2
@@ -28,6 +34,11 @@ void nunchuckInit(){
     send(0x40);
     send(0x00);
     endTransmission();
+#else
+    drvI2CInit();
+    drvI2CWriteByte(0x40, 0x00, SLAVEADDRESS);
+#endif
+    
     
 }
 
@@ -67,13 +78,12 @@ unsigned char readByte(){
 
 controllerData getControllerData(){
     controllerData foo;
-    
-    beginTransmission(WRITEADDRESS);
-    send(0x00);
-    endTransmission();
-    
     int i = 0;
     unsigned char temp[6];
+#ifdef MYCODE
+    beginTransmission(WRITEADDRESS);
+    send(0x00);
+    endTransmission(); 
         
     beginTransmission(READADDRESS);
     temp[i++] = readByte();
@@ -107,15 +117,19 @@ controllerData getControllerData(){
     while(I2C2CONbits.ACKEN);
     
     endTransmission();
+#else
+    drvI2CReadRegisters(0x00, temp, 6, SLAVEADDRESS);
+#endif
+    
     
     for(i = 0; i < 6; ++i)
     temp[i] = (temp[i] ^ 0x17) + 0x17;
     
     foo.joyX = temp[0];
     foo.joyY = temp[1];
-    foo.accelX = (temp[2] << 2) | ((temp[5] >> 6) & 0b11);
+    foo.accelX = (temp[2] << 2) | ((temp[5] >> 2) & 0b11); //LSB of accelerometer data is masked in last byte.
     foo.accelY = (temp[3] << 2) | ((temp[5] >> 4) & 0b11);
-    foo.accelZ = (temp[4] << 2) | ((temp[5] >> 2) & 0b11);
+    foo.accelZ = (temp[4] << 2) | ((temp[5] >> 6) & 0b11);
     foo.c = !(temp[5] & 0b10);
     foo.z = !(temp[5 & 0b1]);
     

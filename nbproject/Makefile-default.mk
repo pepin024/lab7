@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=NEOPIX.c main.c colorIndex.c NUNCHUCK.c
+SOURCEFILES_QUOTED_IF_SPACED=NEOPIX.c main.c colorIndex.c NUNCHUCK.c drvI2C.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/NUNCHUCK.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/NEOPIX.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/colorIndex.o.d ${OBJECTDIR}/NUNCHUCK.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/NUNCHUCK.o ${OBJECTDIR}/drvI2C.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/NEOPIX.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/colorIndex.o.d ${OBJECTDIR}/NUNCHUCK.o.d ${OBJECTDIR}/drvI2C.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/NUNCHUCK.o
+OBJECTFILES=${OBJECTDIR}/NEOPIX.o ${OBJECTDIR}/main.o ${OBJECTDIR}/colorIndex.o ${OBJECTDIR}/NUNCHUCK.o ${OBJECTDIR}/drvI2C.o
 
 # Source Files
-SOURCEFILES=NEOPIX.c main.c colorIndex.c NUNCHUCK.c
+SOURCEFILES=NEOPIX.c main.c colorIndex.c NUNCHUCK.c drvI2C.c
 
 
 CFLAGS=
@@ -116,6 +116,13 @@ ${OBJECTDIR}/NUNCHUCK.o: NUNCHUCK.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  NUNCHUCK.c  -o ${OBJECTDIR}/NUNCHUCK.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/NUNCHUCK.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/NUNCHUCK.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/drvI2C.o: drvI2C.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/drvI2C.o.d 
+	@${RM} ${OBJECTDIR}/drvI2C.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  drvI2C.c  -o ${OBJECTDIR}/drvI2C.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/drvI2C.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/drvI2C.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/NEOPIX.o: NEOPIX.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -144,6 +151,13 @@ ${OBJECTDIR}/NUNCHUCK.o: NUNCHUCK.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/NUNCHUCK.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  NUNCHUCK.c  -o ${OBJECTDIR}/NUNCHUCK.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/NUNCHUCK.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/NUNCHUCK.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/drvI2C.o: drvI2C.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/drvI2C.o.d 
+	@${RM} ${OBJECTDIR}/drvI2C.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  drvI2C.c  -o ${OBJECTDIR}/drvI2C.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/drvI2C.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/drvI2C.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

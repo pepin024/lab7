@@ -19,11 +19,12 @@ Command:
   build/default/debug/main.o \
   build/default/debug/colorIndex.o \
   build/default/debug/NUNCHUCK.o \
-  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp000032a0.00 \
-  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp000032a0.01 \
-  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp000032a0.02 \
-  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp000032a0.03 \
-  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp000032a0.04 \
+  build/default/debug/drvI2C.o \
+  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp00000410.00 \
+  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp00000410.01 \
+  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp00000410.02 \
+  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp00000410.03 \
+  -TC:\\Users\\pepin\\AppData\\Local\\Temp\\tmp00000410.04 \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
   --defsym=__DEBUG=1 \
@@ -71,11 +72,11 @@ Program Memory  [Origin = 0x200, Length = 0xa9fc]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xce           0x135  (309)
-.text                        0x2ce               0x42a           0x63f  (1599)
-.init.delay32                0x6f8                0x1c            0x2a  (42)
-.dinit                       0x714                 0xe            0x15  (21)
+.text                        0x2ce               0x62e           0x945  (2373)
+.init.delay32                0x8fc                0x1c            0x2a  (42)
+.dinit                       0x918                 0xe            0x15  (21)
 
-                 Total program memory used (bytes):          0x7b3  (1971) 3%
+                 Total program memory used (bytes):          0xab9  (2745) 4%
 
 
 Data Memory  [Origin = 0x800, Length = 0x2000]
@@ -121,54 +122,62 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x0002c8                  __DefaultInterrupt
-                  0x0002ce                  _nunchuckInit
-                  0x0002f4                  _beginTransmission
-                  0x000318                  _send
-                  0x000330                  _endTransmission
-                  0x000344                  _readByte
-                  0x000360                  _getControllerData
-                  0x00047e                  _initMatrix
-                  0x0004b4                  _writeHighBit
-                  0x0004c6                  _writeLowBit
-                  0x0004d8                  _writeColor
-                  0x0005ca                  _setBrightness
-                  0x0005da                  _setIndex
-                  0x000616                  _setIndexPacked
-                  0x000666                  _getR
-                  0x000678                  _getG
-                  0x00068c                  _getB
-                  0x0006a0                  _setup
-                  0x0006de                  _loop
-                  0x0006f0                  _main
-                  0x0006f8                  ___delay32
+                  0x0002ce                  _drvI2CInit
+                  0x0003c0                  _drvI2CReadRegisters
+                  0x0004aa                  _drvI2CWriteRegisters
+                  0x00052a                  _drvI2CWriteByte
+                  0x000542                  _initMatrix
+                  0x000578                  _writeHighBit
+                  0x00058a                  _writeLowBit
+                  0x00059c                  _writeColor
+                  0x00068e                  _setBrightness
+                  0x00069e                  _nunchuckInit
+                  0x0006ae                  _beginTransmission
+                  0x0006d2                  _send
+                  0x0006ec                  _endTransmission
+                  0x000700                  _readByte
+                  0x00071c                  _getControllerData
+                  0x0007da                  _setIndex
+                  0x000816                  _setIndexPacked
+                  0x000866                  _getR
+                  0x000878                  _getG
+                  0x00088c                  _getB
+                  0x0008a0                  _setup
+                  0x0008de                  _loop
+                  0x0008f4                  _main
+                  0x0008fc                  ___delay32
 
 External Symbols in Program Memory (by name):
 
                   0x0002c8                  __DefaultInterrupt
-                  0x0006f8                  ___delay32
+                  0x0008fc                  ___delay32
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0002f4                  _beginTransmission
-                  0x000330                  _endTransmission
-                  0x00068c                  _getB
-                  0x000360                  _getControllerData
-                  0x000678                  _getG
-                  0x000666                  _getR
-                  0x00047e                  _initMatrix
-                  0x0006de                  _loop
-                  0x0006f0                  _main
-                  0x0002ce                  _nunchuckInit
-                  0x000344                  _readByte
-                  0x000318                  _send
-                  0x0005ca                  _setBrightness
-                  0x0005da                  _setIndex
-                  0x000616                  _setIndexPacked
-                  0x0006a0                  _setup
-                  0x0004d8                  _writeColor
-                  0x0004b4                  _writeHighBit
-                  0x0004c6                  _writeLowBit
+                  0x0006ae                  _beginTransmission
+                  0x0002ce                  _drvI2CInit
+                  0x0003c0                  _drvI2CReadRegisters
+                  0x00052a                  _drvI2CWriteByte
+                  0x0004aa                  _drvI2CWriteRegisters
+                  0x0006ec                  _endTransmission
+                  0x00088c                  _getB
+                  0x00071c                  _getControllerData
+                  0x000878                  _getG
+                  0x000866                  _getR
+                  0x000542                  _initMatrix
+                  0x0008de                  _loop
+                  0x0008f4                  _main
+                  0x00069e                  _nunchuckInit
+                  0x000700                  _readByte
+                  0x0006d2                  _send
+                  0x00068e                  _setBrightness
+                  0x0007da                  _setIndex
+                  0x000816                  _setIndexPacked
+                  0x0008a0                  _setup
+                  0x00059c                  _writeColor
+                  0x000578                  _writeHighBit
+                  0x00058a                  _writeLowBit
 
 Memory Configuration
 
@@ -189,6 +198,7 @@ LOAD build/default/debug/NEOPIX.o
 LOAD build/default/debug/main.o
 LOAD build/default/debug/colorIndex.o
 LOAD build/default/debug/NUNCHUCK.o
+LOAD build/default/debug/drvI2C.o
 
 reserve_data_0x800
                     0x0800         0x20
@@ -271,41 +281,46 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1192
+.debug_info       0x000000       0x1911
  *(.debug_info)
  .debug_info      0x000000        0x36e build/default/debug/NEOPIX.o
- .debug_info      0x00036e        0x45b build/default/debug/main.o
- .debug_info      0x0007c9        0x216 build/default/debug/colorIndex.o
- .debug_info      0x0009df        0x7b3 build/default/debug/NUNCHUCK.o
+ .debug_info      0x00036e        0x507 build/default/debug/main.o
+ .debug_info      0x000875        0x216 build/default/debug/colorIndex.o
+ .debug_info      0x000a8b        0x6da build/default/debug/NUNCHUCK.o
+ .debug_info      0x001165        0x7ac build/default/debug/drvI2C.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x3db
+.debug_abbrev     0x000000        0x5b7
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0xd7 build/default/debug/NEOPIX.o
  .debug_abbrev    0x0000d7        0x160 build/default/debug/main.o
  .debug_abbrev    0x000237         0xa1 build/default/debug/colorIndex.o
- .debug_abbrev    0x0002d8        0x103 build/default/debug/NUNCHUCK.o
+ .debug_abbrev    0x0002d8        0x12a build/default/debug/NUNCHUCK.o
+ .debug_abbrev    0x000402        0x1b5 build/default/debug/drvI2C.o
 
-.debug_line       0x000000        0x2cd
+.debug_line       0x000000        0x3eb
  *(.debug_line)
  .debug_line      0x000000         0xcc build/default/debug/NEOPIX.o
- .debug_line      0x0000cc         0xbd build/default/debug/main.o
- .debug_line      0x000189         0x4f build/default/debug/colorIndex.o
- .debug_line      0x0001d8         0xf5 build/default/debug/NUNCHUCK.o
+ .debug_line      0x0000cc         0xbe build/default/debug/main.o
+ .debug_line      0x00018a         0x4f build/default/debug/colorIndex.o
+ .debug_line      0x0001d9         0xd8 build/default/debug/NUNCHUCK.o
+ .debug_line      0x0002b1        0x13a build/default/debug/drvI2C.o
 
-.debug_frame      0x000000        0x26a
+.debug_frame      0x000000        0x35e
  *(.debug_frame)
  .debug_frame     0x000000         0xa0 build/default/debug/NEOPIX.o
  .debug_frame     0x0000a0         0x68 build/default/debug/main.o
  .debug_frame     0x000108         0xa0 build/default/debug/colorIndex.o
  .debug_frame     0x0001a8         0xc2 build/default/debug/NUNCHUCK.o
+ .debug_frame     0x00026a         0xf4 build/default/debug/drvI2C.o
 
-.debug_str        0x000000         0x70
+.debug_str        0x000000         0x99
  *(.debug_str)
  .debug_str       0x000000         0x16 build/default/debug/NEOPIX.o
- .debug_str       0x000016         0x1e build/default/debug/main.o
- .debug_str       0x000034         0x11 build/default/debug/colorIndex.o
- .debug_str       0x000045         0x2b build/default/debug/NUNCHUCK.o
+ .debug_str       0x000016         0x27 build/default/debug/main.o
+ .debug_str       0x00003d         0x11 build/default/debug/colorIndex.o
+ .debug_str       0x00004e         0x1f build/default/debug/NUNCHUCK.o
+ .debug_str       0x00006d         0x2c build/default/debug/drvI2C.o
 
 .debug_loc
  *(.debug_loc)
@@ -314,7 +329,7 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x17f
+                  0x000000        0x1e5
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x63 build/default/debug/NEOPIX.o
@@ -324,11 +339,13 @@ __CONFIG1
                   0x0000aa         0x5c build/default/debug/colorIndex.o
  .debug_pubnames
                   0x000106         0x79 build/default/debug/NUNCHUCK.o
+ .debug_pubnames
+                  0x00017f         0x66 build/default/debug/drvI2C.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x60
+.debug_aranges    0x000000         0x78
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/debug/NEOPIX.o
@@ -338,6 +355,8 @@ __CONFIG1
                   0x000030         0x18 build/default/debug/colorIndex.o
  .debug_aranges
                   0x000048         0x18 build/default/debug/NUNCHUCK.o
+ .debug_aranges
+                  0x000060         0x18 build/default/debug/drvI2C.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -924,32 +943,36 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000060        0x188
+                  0x000078        0x20d
  .debug_pubtypes
-                  0x000060         0x2f build/default/debug/NEOPIX.o
+                  0x000078         0x2f build/default/debug/NEOPIX.o
  .debug_pubtypes
-                  0x00008f         0x91 build/default/debug/main.o
+                  0x0000a7         0xae build/default/debug/main.o
  .debug_pubtypes
-                  0x000120         0x12 build/default/debug/colorIndex.o
+                  0x000155         0x12 build/default/debug/colorIndex.o
  .debug_pubtypes
-                  0x000132         0xb6 build/default/debug/NUNCHUCK.o
+                  0x000167         0x93 build/default/debug/NUNCHUCK.o
+ .debug_pubtypes
+                  0x0001fa         0x8b build/default/debug/drvI2C.o
 
 __c30_signature
-                  0x0001e8         0x2a
+                  0x000285         0x30
  __c30_signature
-                  0x0001e8          0x6 build/default/debug/NEOPIX.o
+                  0x000285          0x6 build/default/debug/NEOPIX.o
  __c30_signature
-                  0x0001ee          0x6 build/default/debug/main.o
+                  0x00028b          0x6 build/default/debug/main.o
  __c30_signature
-                  0x0001f4          0x6 build/default/debug/colorIndex.o
+                  0x000291          0x6 build/default/debug/colorIndex.o
  __c30_signature
-                  0x0001fa          0x6 build/default/debug/NUNCHUCK.o
+                  0x000297          0x6 build/default/debug/NUNCHUCK.o
  __c30_signature
-                  0x000200          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x00029d          0x6 build/default/debug/drvI2C.o
  __c30_signature
-                  0x000206          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x0002a3          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x00020c          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x0002a9          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+ __c30_signature
+                  0x0002af          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
 
 .bss                0x0850         0x3c
  .bss               0x0850         0x30 build/default/debug/colorIndex.o
@@ -965,34 +988,39 @@ __c30_signature
 .config_IESO      0x00abfc          0x2
  .config_IESO     0x00abfc          0x2 build/default/debug/main.o
 
-.text             0x0002ce        0x42a
- .text            0x0002ce        0x1b0 build/default/debug/NUNCHUCK.o
-                  0x0002ce                  _nunchuckInit
-                  0x0002f4                  _beginTransmission
-                  0x000318                  _send
-                  0x000330                  _endTransmission
-                  0x000344                  _readByte
-                  0x000360                  _getControllerData
- .text            0x00047e        0x15c build/default/debug/NEOPIX.o
-                  0x00047e                  _initMatrix
-                  0x0004b4                  _writeHighBit
-                  0x0004c6                  _writeLowBit
-                  0x0004d8                  _writeColor
-                  0x0005ca                  _setBrightness
- .text            0x0005da         0xc6 build/default/debug/colorIndex.o
-                  0x0005da                  _setIndex
-                  0x000616                  _setIndexPacked
-                  0x000666                  _getR
-                  0x000678                  _getG
-                  0x00068c                  _getB
- .text            0x0006a0         0x58 build/default/debug/main.o
-                  0x0006a0                  _setup
-                  0x0006de                  _loop
-                  0x0006f0                  _main
+.text             0x0002ce        0x62e
+ .text            0x0002ce        0x274 build/default/debug/drvI2C.o
+                  0x0002ce                  _drvI2CInit
+                  0x0003c0                  _drvI2CReadRegisters
+                  0x0004aa                  _drvI2CWriteRegisters
+                  0x00052a                  _drvI2CWriteByte
+ .text            0x000542        0x15c build/default/debug/NEOPIX.o
+                  0x000542                  _initMatrix
+                  0x000578                  _writeHighBit
+                  0x00058a                  _writeLowBit
+                  0x00059c                  _writeColor
+                  0x00068e                  _setBrightness
+ .text            0x00069e        0x13c build/default/debug/NUNCHUCK.o
+                  0x00069e                  _nunchuckInit
+                  0x0006ae                  _beginTransmission
+                  0x0006d2                  _send
+                  0x0006ec                  _endTransmission
+                  0x000700                  _readByte
+                  0x00071c                  _getControllerData
+ .text            0x0007da         0xc6 build/default/debug/colorIndex.o
+                  0x0007da                  _setIndex
+                  0x000816                  _setIndexPacked
+                  0x000866                  _getR
+                  0x000878                  _getG
+                  0x00088c                  _getB
+ .text            0x0008a0         0x5c build/default/debug/main.o
+                  0x0008a0                  _setup
+                  0x0008de                  _loop
+                  0x0008f4                  _main
 
-.init.delay32     0x0006f8         0x1c
- .init.delay32    0x0006f8         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x0006f8                  ___delay32
+.init.delay32     0x0008fc         0x1c
+ .init.delay32    0x0008fc         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x0008fc                  ___delay32
 
-.dinit            0x000714          0xe
- .dinit           0x000714          0xe data_init
+.dinit            0x000918          0xe
+ .dinit           0x000918          0xe data_init
