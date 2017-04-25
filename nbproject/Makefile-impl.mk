@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=lab7_v001.X
+PROJECTNAME=final_Project
 
 # Active Configuration
 DEFAULTCONF=default

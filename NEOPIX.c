@@ -53,58 +53,77 @@ void writeLowBit(int high, int low){
     
 }
 
-void writeColor(neopixel *matrix, unsigned char r, unsigned char g, unsigned char b)
+void writeColor(neopixel *matrix, unsigned char displayArray[])
 {
     int pinMask = 1 << matrix->pin;
     int high = PORTB | pinMask;
     int low =  PORTB & (65535 - pinMask);
-    int i;
-   //To make the math and conditional nice 0 represents an unaltered RGB value, 
-    //1 will end up setting the RGB values to 0 and 255 will return RBB values 
-    //a step down from their original value.
-    if(matrix->brightness){
-        r = (r * matrix->brightness) >> 8;
-        g = (g * matrix->brightness) >> 8;
-        b = (b * matrix->brightness) >> 8;
-    }
+    int i,j;
+    int length = matrix->strandSize;//maps the length of the display
+    unsigned char g, r, b;
+   
+    
     //Interrupts are disabled so that a full port write can be done without worrying about the value of PORTB changing
     //A value is calculated for setting the bit hi and low and is written to the entire port
-    __builtin_disi(0x3FFF); //disables interrupts while writing to array
-    for(i=7; i >= 0; --i){
-        if(g & (1<<i))
-            writeHighBit(high, low);
-        else
-            writeLowBit(high, low);
+    
+    for(j=0; j<length; j++)
+    {
+        __builtin_disi(0x3FFF); //disables interrupts while writing to array
+        g = displayArray[j*3];
+        for(i=7; i >= 0; --i)
+        {
+            if(g & (1<<i))
+                writeHighBit(high, low);
+            else
+                writeLowBit(high, low);
+        }
+        r = displayArray[(j*3)+1];
+        for(i=7; i >= 0; --i)
+        {
+            if(r & (1<<i))
+                writeHighBit(high, low);
+            else
+                writeLowBit(high, low);
+        }
+        b = displayArray[(j*3)+1];
+        for(i=7; i >= 0; --i)
+        {
+            if(b & (1<<i))
+                writeHighBit(high, low);
+            else
+                writeLowBit(high, low);
+        }
+        __builtin_disi(0x0000); //Enable interrupts.
     }
-    for(i=7; i >= 0; --i){
-        if(r & (1<<i))
-            writeHighBit(high, low);
-        else
-            writeLowBit(high, low);
-    }
-    for(i=7; i >= 0; --i){
-        if(b & (1<<i))
-            writeHighBit(high, low);
-        else
-            writeLowBit(high, low);
-    }
-    __builtin_disi(0x0000); //Enable interrupts.
+    
 }
 
 void sendColor(neopixel *matrix, unsigned long int colorArray[], unsigned char matrixArray[])
 {
     //This function takes in one of the neopixel structs, a pallette, and an array that selects a color from the pallette for each LED
-    //It then cycles through the length of the matrix and writes the color to each LED.
+    //It then cycles through the length of the matrix and writes the rgb colors to one array that is passed to write color
     int length = matrix->strandSize; //length is set to the length of array found in the neopixel struct
+    char bright = matrix->brightness;
     int i;
-    unsigned char red, green, blue; //rgb values to be written
-    for (i=0; i<length; i++)
+    unsigned char displayArray[length*3]; //displayArray holds individual rgb values to be written, it is multiplied by 3 to include r, g, b for each color
+    for(i=0; i<length; i++)
     {
-        red = getR(matrixArray[i], colorArray);
-        green = getG(matrixArray[i], colorArray);
-        blue = getB(matrixArray[i], colorArray);
+        unsigned char g = getG(matrixArray[i], colorArray); //sets each rgb value to be stored in the array to its proper color
+        unsigned char r = getR(matrixArray[i], colorArray); //as indicated bye the matrix pattern and the color pallette
+        unsigned char b = getB(matrixArray[i], colorArray);
         
-        writeColor(matrix, red, green, blue);
+        if(bright) //scales rgb values to brightness
+        {
+        r = (r * bright) >> 8;       //To make the math and conditional nice 0 represents an unaltered RGB value, 
+        g = (g * bright) >> 8;       //1 will end up setting the RGB values to 0 and 255 will return RBB values 
+        b = (b * bright) >> 8;       //a step down from their original value.
+        }
+        
+        displayArray[i*3] =  g;
+        displayArray[(i*3)+1] = r;
+        displayArray[(i*3)+2] = b;
+        
     }
-    __delay_us(10);//latch the colors into the matrix
+    writeColor(matrix, displayArray); //calls write color for the displayArray
+    __delay_us(10);//latch colors
 }
