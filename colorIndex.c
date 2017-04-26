@@ -36,7 +36,7 @@ void initColorArray(unsigned long int ac[]) //initializes array to 16 basic colo
     colorArray[index][2] = blu;
 }*/
 
-void setIndexPacked(unsigned char index, unsigned char red, unsigned char blu, unsigned char grn, unsigned long int ac[])
+void setIndexPacked(unsigned char index, unsigned char red, unsigned char grn, unsigned char blu, unsigned long int ac[])
 {
     ac[index] = ((long) red << 16) | ((long)grn << 8) | ((long) blu);
 }

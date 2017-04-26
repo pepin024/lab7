@@ -69,7 +69,7 @@ int main(void) {
     {
         buttons = scanInputs();
         setBrightness(&rightEye, buttons.joyX >> 2);
-        //setBrightness(&leftEye, buttons.joyY >> 2);
+        setBrightness(&leftEye, buttons.joyY >> 2);
         if(buttons.c)
             sendColor(&rightEye, colorArray, array);
         else
