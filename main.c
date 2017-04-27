@@ -7,6 +7,7 @@
 #include <libpic30.h>
 #include "colorIndexHead.h"
 #include "NEOPIX.h"
+#include "inputs.h"
 
 // PIC24FJ64GA002 Configuration Bit Settings
 // CW1: FLASH CONFIGURATION WORD 1 (see PIC24 Family Reference Manual 24.1)
@@ -40,6 +41,7 @@ void setup(void) { //initializer function
     return;
 }
 
+
 void loop(void) 
 {
     return;
@@ -47,25 +49,155 @@ void loop(void)
 
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
-    unsigned char array[5];
-    array[0]= 4;
-    array[1]=2;
-    array[2]=1;
-    array[3]=15;
-    array[4]=5;
-    unsigned char test1[5] = {0, 1, 2, 3, 4};
-    unsigned char blank[5] = {0, 0, 0, 0, 0};
-    unsigned long int colorArray[32];
-    initColorArray(colorArray);
-    setBrightness(&rightEye, 60);
+    
+    //SET EYE-COLORS --- There are four colors to cycle between, blue, red, and yellow
+    unsigned long int blueEye[3];
+        setIndexPacked(0, 0, 0, 0, blueEye);
+        setIndexPacked(1, 255, 255, 255, blueEye); //each eye has index 0 and 1 as black and white since those will be needed for every eye color
+        setIndexPacked(2, 0, 0, 255, blueEye);      //the last index is reserved for whatever color the eye is to be
+    unsigned long int redEye[3];
+        setIndexPacked(0, 0, 0, 0, redEye);
+        setIndexPacked(1, 255, 255, 255, redEye);
+        setIndexPacked(2, 255, 0, 0, redEye); 
+    unsigned long int greenEye[3];
+        setIndexPacked(0, 0, 0, 0, greenEye);
+        setIndexPacked(1, 255, 255, 255, greenEye);
+        setIndexPacked(2, 0, 255, 0, greenEye); 
+    unsigned long int yellowEye[3];
+        setIndexPacked(0, 0, 0, 0, yellowEye);
+        setIndexPacked(1, 255, 255, 255, yellowEye);
+        setIndexPacked(2, 255, 255, 0, yellowEye);
+    
+    
+    unsigned char array[40];    //holds pattern to be displayed
+    setBrightness(&rightEye, 60); //sets the brightness of right and left eye to 60/255
     setBrightness(&leftEye, 60);
     
     controllerData buttons;
-    
+    unsigned char flag = 1; //flag checks if eyes should be rewritten
+    unsigned char eyeCol = 0; //indicates which color should be displayed 0->blue, 1->red, 2->green, 3->yellow
+    int xPos = 1;
+    int yPos = 2;
+    int oldX, oldY,botLeftPix; //used to see if the eye has moved.
     while (1) 
     {
         buttons = scanInputs();
-        setBrightness(&rightEye, buttons.joyX >> 2);
+        xPos = ((buttons.joyX)-220)/177; //Maps joyX to 0-2
+        yPos = ((buttons.joyY)-220)/110; //Maps joyY to 0-4
+        
+        //THIS SECTION WILL ASSEMBLE THE ARRAY - POSITION OF THE EYE
+        if(xPos!=oldX || yPos!=oldY) //checks if the eye has moved from its old position
+        {
+            botLeftPix = xPos*8+yPos; //botLeftPix represents the bottom left position of the iris
+            int i;
+            for(i=0; i<40; i++)
+            {
+                if((i>=botLeftPix && i<botLeftPix+4) || (i>=botLeftPix+8 && i<botLeftPix+12) || (i>=botLeftPix+16 && i<botLeftPix+20))
+                { //if statement is used to catch an index that is part of the iris or pupil which should be a color other than black
+                    if(i==botLeftPix+9 || i==botLeftPix+10) //this catches if the index is part of the pupil and sets it white
+                    {
+                        array[i]=1;
+                    }
+                    else    //otherwise the index is part of the iris and is set to the desired color.
+                    {
+                        array[i]=2;
+                    }
+                }
+                else //if an index is not part of the iris or pupil then it is sets to black
+                {
+                    array[i]=0;
+                }
+            }
+            flag = 1; //set the flag to rewrite to the matrices
+            oldX = xPos; //update old positions
+            oldY = yPos;
+        }
+        
+        
+        //THIS SECTION SELECTS THE COLOR OF THE EYE
+        if(buttons.c && !(buttons.z)) //if button c is pushed it will increment the eyeCol
+        {
+            eyeCol++;
+            eyeCol &= 0x03;
+            flag = 1; //set the flag to rewrite to the matrices
+        }
+        else if(buttons.z && !(buttons.c)) //if button z is pushed it will decrement the eyeCol
+        {
+            eyeCol--;
+            eyeCol &= 0x03;
+            flag = 1; //set the flag to rewrite to the matrices
+        }
+        
+        if(flag) //if we should rewrite the matrices
+        {
+            flag = 0; //reset flag
+            //use conditions for the correct eye color
+            if(eyeCol == 0)
+            {
+                sendColor(&rightEye, blueEye, array);
+                __delay_ms(5);
+                sendColor(&leftEye, blueEye, array);
+                __delay_ms(5);
+            }
+            else if(eyeCol == 1)
+            {
+                sendColor(&rightEye, redEye, array);
+                __delay_ms(5);
+                sendColor(&leftEye, redEye, array);
+                __delay_ms(5);
+            }
+            else if(eyeCol == 2)
+            {
+                sendColor(&rightEye, greenEye, array);
+                __delay_ms(5);
+                sendColor(&leftEye, greenEye, array);
+                __delay_ms(5);
+            }
+            else
+            {
+                sendColor(&rightEye, yellowEye, array);
+                __delay_ms(5);
+                sendColor(&leftEye, yellowEye, array);
+                __delay_ms(5);
+            }
+        }
+    }
+
+}
+
+
+
+/* EACH EYE WILL LOOK LIKE THE IMAGE BELOW
+ * "." REPRESENTS A BLACK (OFF) LED
+ * "=" REPRESENTS THE IRIS WHICH IS A COLOR THAT IS SELECTED
+ * "+" REPRESENTS THE PUPIL WHICH WILL BE WHITE IN THIS CASE
+ 
+  -----------
+ | . . . . . |
+ | . . . . . |
+ | . = = = . |
+ | . = + = . |
+ | . = + = . |
+ | . = = = . | <-THE LOWER LEFT OF THE IRIS IS WHAT botLeftPix MAPS TO, THIS IS USED AS A REFERENCE POINT TO BUILD THE EYE
+ | . . . . . |
+ | . . . . . |
+  -----------
+ 
+ * THE MATRIX WRITES FROM THE BOTTEM LEFT UP. ONCE IT REACHES THE TOP IT LOOPS BACK TO THE NEXT LED ON THE BOTTOM
+ * 
+  ----------------
+ | 07 15 23 31 39 |
+ | 06 14 22 30 38 |
+ | 05 13 21 29 37 |
+ | 04 12 20 28 36 |
+ | 03 11 19 27 35 |
+ | 02 10 18 26 34 |
+ | 01 09 17 25 33 |
+ | 00 08 16 24 32 |
+  ----------------
+ */
+
+        /*setBrightness(&rightEye, buttons.joyX >> 2);
         setBrightness(&leftEye, buttons.joyY >> 2);
         if(buttons.c)
             sendColor(&rightEye, colorArray, array);
@@ -76,7 +208,4 @@ int main(void) {
             sendColor(&leftEye, colorArray, array); //sendColor takes 952 cycles between each write color
         else
             sendColor(&leftEye, colorArray, blank);
-        __delay_ms(5);
-    }
-
-}
+        __delay_ms(5);*/

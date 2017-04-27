@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>NEOPIX.h</itemPath>
       <itemPath>colorIndexHead.h</itemPath>
-      <itemPath>NUNCHUCK.h</itemPath>
       <itemPath>inputs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -19,7 +18,6 @@
       <itemPath>NEOPIX.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>colorIndex.c</itemPath>
-      <itemPath>NUNCHUCK.c</itemPath>
       <itemPath>inputs.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -39,7 +37,7 @@
         <targetDevice>PIC24FJ64GA002</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PK3OBPlatformTool</platformTool>
+        <platformTool>Simulator</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.30</languageToolchainVersion>
         <platform>3</platform>
