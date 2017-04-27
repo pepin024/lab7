@@ -63,20 +63,21 @@ Program Memory  [Origin = 0x200, Length = 0xa9fc]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200                0xce           0x135  (309)
-.text                        0x2ce               0x724           0xab6  (2742)
-.init.delay32                0x9f2                0x1c            0x2a  (42)
-.dinit                       0xa0e                 0x8             0xc  (12)
+.text                        0x2ce               0x72a           0xabf  (2751)
+.init.delay32                0x9f8                0x1c            0x2a  (42)
+.dinit                       0xa14                0x16            0x21  (33)
 
-                 Total program memory used (bytes):          0xc21  (3105) 4%
+                 Total program memory used (bytes):          0xc3f  (3135) 4%
 
 
 Data Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.bss                         0x800                   0             0xc  (12)
+.bss                         0x800                   0            0x52  (82)
+.data                        0x852                   0             0xa  (10)
 
-                 Total data memory used (bytes):            0xc  (12) <1%
+                 Total data memory used (bytes):           0x5c  (92) 1%
 
 
 Dynamic Memory Usage
@@ -84,20 +85,28 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x80c                              0x1ff4  (8180)
+stack                        0x85c                              0x1fa4  (8100)
 
-                 Maximum dynamic memory (bytes):         0x1ff4  (8180)
+                 Maximum dynamic memory (bytes):         0x1fa4  (8100)
 
 
 External Symbols in Data Memory (by address):
 
                     0x0800                  _leftEye
                     0x0806                  _rightEye
+                    0x080c                  _colorArray
+                    0x084c                  _blank
+                    0x0852                  _array
+                    0x0857                  _test1
 
 External Symbols in Data Memory (by name):
 
+                    0x0852                  _array
+                    0x084c                  _blank
+                    0x080c                  _colorArray
                     0x0800                  _leftEye
                     0x0806                  _rightEye
+                    0x0857                  _test1
 
 External Symbols in Program Memory (by address):
 
@@ -107,47 +116,47 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init
                   0x0002c8                  __DefaultInterrupt
                   0x0002ce                  _setup
-                  0x000302                  _loop
-                  0x000308                  _main
-                  0x0005bc                  _initMatrix
-                  0x0005f2                  _setBrightness
-                  0x000608                  _writeHighBit
-                  0x00061a                  _writeLowBit
-                  0x00062c                  _writeColor
-                  0x000724                  _sendColor
-                  0x00080e                  _initColorArray
-                  0x0008d6                  _setIndexPacked
-                  0x000916                  _getR
-                  0x00092e                  _getG
-                  0x00094c                  _getB
-                  0x000962                  _inputInit
-                  0x0009b2                  _scanInputs
-                  0x0009f2                  ___delay32
+                  0x000308                  _loop
+                  0x00030e                  _main
+                  0x0005c2                  _initMatrix
+                  0x0005f8                  _setBrightness
+                  0x00060e                  _writeHighBit
+                  0x000620                  _writeLowBit
+                  0x000632                  _writeColor
+                  0x00072a                  _sendColor
+                  0x000814                  _initColorArray
+                  0x0008dc                  _setIndexPacked
+                  0x00091c                  _getR
+                  0x000934                  _getG
+                  0x000952                  _getB
+                  0x000968                  _inputInit
+                  0x0009b8                  _scanInputs
+                  0x0009f8                  ___delay32
 
 External Symbols in Program Memory (by name):
 
                   0x0002c8                  __DefaultInterrupt
-                  0x0009f2                  ___delay32
+                  0x0009f8                  ___delay32
                   0x000252                  __data_init
                   0x000252                  __data_init_standard
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x00094c                  _getB
-                  0x00092e                  _getG
-                  0x000916                  _getR
-                  0x00080e                  _initColorArray
-                  0x0005bc                  _initMatrix
-                  0x000962                  _inputInit
-                  0x000302                  _loop
-                  0x000308                  _main
-                  0x0009b2                  _scanInputs
-                  0x000724                  _sendColor
-                  0x0005f2                  _setBrightness
-                  0x0008d6                  _setIndexPacked
+                  0x000952                  _getB
+                  0x000934                  _getG
+                  0x00091c                  _getR
+                  0x000814                  _initColorArray
+                  0x0005c2                  _initMatrix
+                  0x000968                  _inputInit
+                  0x000308                  _loop
+                  0x00030e                  _main
+                  0x0009b8                  _scanInputs
+                  0x00072a                  _sendColor
+                  0x0005f8                  _setBrightness
+                  0x0008dc                  _setIndexPacked
                   0x0002ce                  _setup
-                  0x00062c                  _writeColor
-                  0x000608                  _writeHighBit
-                  0x00061a                  _writeLowBit
+                  0x000632                  _writeColor
+                  0x00060e                  _writeHighBit
+                  0x000620                  _writeLowBit
 
 Memory Configuration
 
@@ -222,12 +231,12 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1a79
+.debug_info       0x000000       0x1af4
  *(.debug_info)
  .debug_info      0x000000        0x476 build/default/production/NEOPIX.o
- .debug_info      0x000476        0x471 build/default/production/main.o
- .debug_info      0x0008e7        0x209 build/default/production/colorIndex.o
- .debug_info      0x000af0        0xf89 build/default/production/inputs.o
+ .debug_info      0x000476        0x4ec build/default/production/main.o
+ .debug_info      0x000962        0x209 build/default/production/colorIndex.o
+ .debug_info      0x000b6b        0xf89 build/default/production/inputs.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000        0x414
@@ -237,12 +246,12 @@ __CONFIG1
  .debug_abbrev    0x00025a         0x8d build/default/production/colorIndex.o
  .debug_abbrev    0x0002e7        0x12d build/default/production/inputs.o
 
-.debug_line       0x000000        0x322
+.debug_line       0x000000        0x324
  *(.debug_line)
  .debug_line      0x000000         0xed build/default/production/NEOPIX.o
- .debug_line      0x0000ed        0x116 build/default/production/main.o
- .debug_line      0x000203         0x5c build/default/production/colorIndex.o
- .debug_line      0x00025f         0xc3 build/default/production/inputs.o
+ .debug_line      0x0000ed        0x118 build/default/production/main.o
+ .debug_line      0x000205         0x5c build/default/production/colorIndex.o
+ .debug_line      0x000261         0xc3 build/default/production/inputs.o
 
 .debug_frame      0x000000        0x216
  *(.debug_frame)
@@ -251,12 +260,12 @@ __CONFIG1
  .debug_frame     0x00012a         0xa0 build/default/production/colorIndex.o
  .debug_frame     0x0001ca         0x4c build/default/production/inputs.o
 
-.debug_str        0x000000         0xc3
+.debug_str        0x000000         0xce
  *(.debug_str)
  .debug_str       0x000000         0x2a build/default/production/NEOPIX.o
- .debug_str       0x00002a         0x14 build/default/production/main.o
- .debug_str       0x00003e          0x6 build/default/production/colorIndex.o
- .debug_str       0x000044         0x7f build/default/production/inputs.o
+ .debug_str       0x00002a         0x1f build/default/production/main.o
+ .debug_str       0x000049          0x6 build/default/production/colorIndex.o
+ .debug_str       0x00004f         0x7f build/default/production/inputs.o
 
 .debug_loc
  *(.debug_loc)
@@ -265,16 +274,16 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x13a
+                  0x000000        0x167
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x71 build/default/production/NEOPIX.o
  .debug_pubnames
-                  0x000071         0x47 build/default/production/main.o
+                  0x000071         0x74 build/default/production/main.o
  .debug_pubnames
-                  0x0000b8         0x53 build/default/production/colorIndex.o
+                  0x0000e5         0x53 build/default/production/colorIndex.o
  .debug_pubnames
-                  0x00010b         0x2f build/default/production/inputs.o
+                  0x000138         0x2f build/default/production/inputs.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -902,10 +911,17 @@ __c30_signature
  __c30_signature
                   0x0002b3          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
 
-.bss                0x0800          0xc
- .bss               0x0800          0xc build/default/production/main.o
+.bss                0x0800         0x52
+ .bss               0x0800         0x52 build/default/production/main.o
                     0x0800                  _leftEye
                     0x0806                  _rightEye
+                    0x080c                  _colorArray
+                    0x084c                  _blank
+
+.data               0x0852          0xa
+ .data              0x0852          0xa build/default/production/main.o
+                    0x0852                  _array
+                    0x0857                  _test1
 
 .config_JTAGEN    0x00abfe          0x2
  .config_JTAGEN
@@ -914,31 +930,31 @@ __c30_signature
 .config_IESO      0x00abfc          0x2
  .config_IESO     0x00abfc          0x2 build/default/production/main.o
 
-.text             0x0002ce        0x724
- .text            0x0002ce        0x2ee build/default/production/main.o
+.text             0x0002ce        0x72a
+ .text            0x0002ce        0x2f4 build/default/production/main.o
                   0x0002ce                  _setup
-                  0x000302                  _loop
-                  0x000308                  _main
- .text            0x0005bc        0x252 build/default/production/NEOPIX.o
-                  0x0005bc                  _initMatrix
-                  0x0005f2                  _setBrightness
-                  0x000608                  _writeHighBit
-                  0x00061a                  _writeLowBit
-                  0x00062c                  _writeColor
-                  0x000724                  _sendColor
- .text            0x00080e        0x154 build/default/production/colorIndex.o
-                  0x00080e                  _initColorArray
-                  0x0008d6                  _setIndexPacked
-                  0x000916                  _getR
-                  0x00092e                  _getG
-                  0x00094c                  _getB
- .text            0x000962         0x90 build/default/production/inputs.o
-                  0x000962                  _inputInit
-                  0x0009b2                  _scanInputs
+                  0x000308                  _loop
+                  0x00030e                  _main
+ .text            0x0005c2        0x252 build/default/production/NEOPIX.o
+                  0x0005c2                  _initMatrix
+                  0x0005f8                  _setBrightness
+                  0x00060e                  _writeHighBit
+                  0x000620                  _writeLowBit
+                  0x000632                  _writeColor
+                  0x00072a                  _sendColor
+ .text            0x000814        0x154 build/default/production/colorIndex.o
+                  0x000814                  _initColorArray
+                  0x0008dc                  _setIndexPacked
+                  0x00091c                  _getR
+                  0x000934                  _getG
+                  0x000952                  _getB
+ .text            0x000968         0x90 build/default/production/inputs.o
+                  0x000968                  _inputInit
+                  0x0009b8                  _scanInputs
 
-.init.delay32     0x0009f2         0x1c
- .init.delay32    0x0009f2         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x0009f2                  ___delay32
+.init.delay32     0x0009f8         0x1c
+ .init.delay32    0x0009f8         0x1c c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x0009f8                  ___delay32
 
-.dinit            0x000a0e          0x8
- .dinit           0x000a0e          0x8 data_init
+.dinit            0x000a14         0x16
+ .dinit           0x000a14         0x16 data_init

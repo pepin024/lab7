@@ -29,13 +29,20 @@
 #pragma config FNOSC = FRCPLL      // Oscillator Select (Fast RC Oscillator with PLL module (FRCPLL))
 
 neopixel leftEye, rightEye; //these represent each LED matrix, they are of the neopixel Struct type defined in the NEOPIX.h
+unsigned long int colorArray[16];
+unsigned char array[] = {4, 2, 1, 15, 15};
+unsigned char blank[] = {0, 0, 0, 0, 0};
+unsigned char test1[] = {0, 1, 2, 3, 4};
+
 
 void setup(void) { //initializer function
     CLKDIVbits.RCDIV = 0; // sets clock speed to 16MHz
     
     
-    leftEye = initMatrix(6, 5); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
-    rightEye = initMatrix(5, 5);//initializes right eye to pin 6 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    leftEye = initMatrix(6, 40); //initializes left eye to pin 5 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    rightEye = initMatrix(5, 40);//initializes right eye to pin 6 with strandLength of 5, STRAND LENGTH IS SET TO 5 FOR TESTING PURPOSES, THIS SHOULD BE AT 40
+    inputInit();
+    initColorArray(colorArray);
     asm("nop");
     
     return;
@@ -82,6 +89,7 @@ int main(void) {
     while (1) 
     {
         buttons = scanInputs();
+        
         xPos = ((buttons.joyX)-220)/177; //Maps joyX to 0-2
         yPos = ((buttons.joyY)-220)/110; //Maps joyY to 0-4
         
@@ -161,8 +169,7 @@ int main(void) {
                 __delay_ms(5);
             }
         }
-    }
-
+    }       
 }
 
 
