@@ -7,6 +7,7 @@
       <itemPath>NEOPIX.h</itemPath>
       <itemPath>colorIndexHead.h</itemPath>
       <itemPath>NUNCHUCK.h</itemPath>
+      <itemPath>inputs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -19,6 +20,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>colorIndex.c</itemPath>
       <itemPath>NUNCHUCK.c</itemPath>
+      <itemPath>inputs.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
