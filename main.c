@@ -57,7 +57,7 @@ void loop(void)
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
     
-    //SET EYE-COLORS --- There are four colors to cycle between, blue, red, and yellow
+    //SET EYE-COLORS --- There are three colors to cycle between, blue, red, and yellow
     unsigned long int blueEye[3];
         setIndexPacked(0, 0, 0, 0, blueEye);
         setIndexPacked(1, 255, 255, 255, blueEye); //each eye has index 0 and 1 as black and white since those will be needed for every eye color
@@ -66,10 +66,6 @@ int main(void) {
         setIndexPacked(0, 0, 0, 0, redEye);
         setIndexPacked(1, 255, 255, 255, redEye);
         setIndexPacked(2, 255, 0, 0, redEye); 
-    unsigned long int greenEye[3];
-        setIndexPacked(0, 0, 0, 0, greenEye);
-        setIndexPacked(1, 255, 255, 255, greenEye);
-        setIndexPacked(2, 0, 255, 0, greenEye); 
     unsigned long int yellowEye[3];
         setIndexPacked(0, 0, 0, 0, yellowEye);
         setIndexPacked(1, 255, 255, 255, yellowEye);
@@ -82,16 +78,22 @@ int main(void) {
     
     controllerData buttons;
     unsigned char flag = 1; //flag checks if eyes should be rewritten
-    unsigned char eyeCol = 0; //indicates which color should be displayed 0->blue, 1->red, 2->green, 3->yellow
     int xPos = 1;
     int yPos = 2;
     int oldX, oldY,botLeftPix; //used to see if the eye has moved.
+    unsigned char eyeCol = 0, oldEyeCol = 0;
     while (1) 
     {
         buttons = scanInputs();
         
-        xPos = ((buttons.joyX)-220)/177; //Maps joyX to 0-2
-        yPos = ((buttons.joyY)-220)/110; //Maps joyY to 0-4
+        xPos = ((buttons.joyX)-304)/211; //Maps joyX to 0-2
+        if(xPos > 2)
+            xPos = 2; //ensures that xPos doesn't exceed 2
+        xPos = 2 - xPos; // The joy stick reads left as max, so the "2-" maps left to min and right to max
+        yPos = ((buttons.joyY)-322)/123; //Maps joyY to 0-4
+        if(yPos > 4)
+            yPos = 4; //ensures that yPos doesn't exceed 4
+        yPos = 4 - yPos; // The joy stick reads down as max, so the "4-" maps down to min and up to max
         
         //THIS SECTION WILL ASSEMBLE THE ARRAY - POSITION OF THE EYE
         if(xPos!=oldX || yPos!=oldY) //checks if the eye has moved from its old position
@@ -123,17 +125,23 @@ int main(void) {
         
         
         //THIS SECTION SELECTS THE COLOR OF THE EYE
-        if(buttons.c && !(buttons.z)) //if button c is pushed it will increment the eyeCol
+        if(buttons.c) //if button c is pushed it will set eyeCol to 1
         {
-            eyeCol++;
-            eyeCol &= 0x03;
-            flag = 1; //set the flag to rewrite to the matrices
+            eyeCol = 1;
         }
-        else if(buttons.z && !(buttons.c)) //if button z is pushed it will decrement the eyeCol
+        else if(buttons.z) //if button z is pushed it will set eyeCol to 2
         {
-            eyeCol--;
-            eyeCol &= 0x03;
+            eyeCol = 2;
+        }
+        else // otherwise eyeCol is 0
+        {
+            eyeCol = 0;
+        }
+        
+        if(eyeCol != oldEyeCol)
+        {
             flag = 1; //set the flag to rewrite to the matrices
+            oldEyeCol = eyeCol;
         }
         
         if(flag) //if we should rewrite the matrices
@@ -152,13 +160,6 @@ int main(void) {
                 sendColor(&rightEye, redEye, array);
                 __delay_ms(5);
                 sendColor(&leftEye, redEye, array);
-                __delay_ms(5);
-            }
-            else if(eyeCol == 2)
-            {
-                sendColor(&rightEye, greenEye, array);
-                __delay_ms(5);
-                sendColor(&leftEye, greenEye, array);
                 __delay_ms(5);
             }
             else
