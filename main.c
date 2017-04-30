@@ -50,6 +50,11 @@ unsigned char blank[40] = {     0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0};
+unsigned char stripes[40] = {   0, 0, 0, 0, 0, 0, 0, 0,
+                                1, 1, 1, 1, 1, 1, 1, 1,
+                                2, 2, 2, 2, 2, 2, 2, 2,
+                                3, 3, 3, 3, 3, 3, 3, 3,
+                                4, 4, 4, 4, 4, 4, 4, 4};
 
 
 void setup(void) { //initializer function
@@ -68,43 +73,122 @@ void setup(void) { //initializer function
 
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
+    int i;
     
-    //SET EYE-COLORS --- There are three colors to cycle between, blue, red, and yellow
-    unsigned long int blueEye[3];
+   //SET EYE-COLORS --- There are three colors to cycle between, blue, red, and yellow
+    unsigned long int blueEye[16];
         setIndexPacked(0, 0, 0, 0, blueEye);
         setIndexPacked(1, 255, 255, 255, blueEye); //each eye has index 0 and 1 as black and white since those will be needed for every eye color
         setIndexPacked(2, 0, 0, 255, blueEye);      //the last index is reserved for whatever color the eye is to be
-    unsigned long int redEye[3];
+        for(i = 4; i < 16; i++){
+            setIndexPacked(i, 0,0,0, blueEye);
+        }
+                
+    unsigned long int redEye[16];
         setIndexPacked(0, 0, 0, 0, redEye);
         setIndexPacked(1, 255, 255, 255, redEye);
         setIndexPacked(2, 255, 0, 0, redEye); 
-    unsigned long int yellowEye[3];
+        for(i = 4; i < 16; i++){
+            setIndexPacked(i,0,0,0,redEye);
+        }
+    unsigned long int yellowEye[16];
         setIndexPacked(0, 0, 0, 0, yellowEye);
         setIndexPacked(1, 255, 255, 255, yellowEye);
         setIndexPacked(2, 255, 255, 0, yellowEye);
-    
+        for(i = 4; i < 16; i++){
+            setIndexPacked(i,0,0,0,yellowEye);
+        }
+    unsigned long int palleteFour[16];
+        setIndexPacked(0,0,0,0,palleteFour);
+        setIndexPacked(1,255,0,0,palleteFour);
+        setIndexPacked(2,0,170,0,palleteFour);
+        setIndexPacked(3,34,120,230,palleteFour);
+        setIndexPacked(4,255,255,255,palleteFour);
+        setIndexPacked(5,120,240,80, palleteFour);
+        setIndexPacked(6,100,20,255, palleteFour);
+        setIndexPacked(7,10,50,150,palleteFour);
+        setIndexPacked(8,170, 0, 170,palleteFour);
+        setIndexPacked(9,0, 170, 170,palleteFour);
+        for(i = 10; i <16; i++){
+            setIndexPacked(i,0,0,0,palleteFour);
+        }       
+        
+    unsigned long int palleteFive[16];
+    for(i = 0; i < 16; i++){
+        if(i < 11){
+            if(i % 3 == 0){
+                setIndexPacked(i,0,170,0,palleteFive);
+            }
+            else if(i % 3 == 1) {
+                setIndexPacked(i,0, 0, 170,palleteFive);
+            }
+            else if(i % 3 == 2){
+                setIndexPacked(i,170, 0, 0,palleteFive);
+            }
+        }
+        else{
+            setIndexPacked(i,0,0,0,palleteFive);
+        }
+    }
     
     unsigned char displayArray[40];    //holds pattern to be displayed
-    setBrightness(&rightEye, 60); //sets the brightness of right and left eye to 60/255
-    setBrightness(&leftEye, 60);
+    setBrightness(&rightEye, 40); //sets the brightness of right and left eye to 60/255
+    setBrightness(&leftEye, 40);
     
     controllerData buttons;
     unsigned long int* colorPallete;
     
 
-   
+    int palleteChoose = 0;
+    int shapeChoose = 0;
+    int prevPalBut = 0;
+    int prevShapeBut = 0;
     
     while (1) 
     {
         int xShift, yShift;
+        
+       
+
+        
         buttons = scanInputs();
         
         xShift = ((buttons.joyX) - 304)/211;
         yShift = ((buttons.joyY) - 322)/123;
-        if(buttons.c)
-            colorPallete = redEye;
-        else
+        
+        
+        if((prevShapeBut != buttons.c) && buttons.c){
+            shapeChoose++;
+            if(shapeChoose > 3){
+                shapeChoose = 0;
+            }
+        }
+        
+        if((prevPalBut != buttons.z) && buttons.z){
+            palleteChoose++;
+            if(palleteChoose >= 5){
+                palleteChoose = 0;
+            }           
+        }
+        
+        prevPalBut = buttons.z;
+        prevShapeBut = buttons.c;
+        
+        if(palleteChoose == 0){
             colorPallete = blueEye;
+        }
+        else if (palleteChoose == 1){
+            colorPallete = redEye;
+        }
+        else if (palleteChoose == 2){
+            colorPallete = yellowEye;
+        }
+        else if (palleteChoose == 3){
+            colorPallete = palleteFour;
+        }
+        else if (palleteChoose == 4){
+            colorPallete = palleteFive;
+        }
 
         int i, j;
 
