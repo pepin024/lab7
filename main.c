@@ -34,6 +34,7 @@ unsigned char array[] = {4, 2, 1, 15, 15};
 unsigned char blank[] = {0, 0, 0, 0, 0};
 unsigned char test1[] = {0, 1, 2, 3, 4};
 
+int diamond[40]; 
 
 void setup(void) { //initializer function
     CLKDIVbits.RCDIV = 0; // sets clock speed to 16MHz
@@ -45,6 +46,19 @@ void setup(void) { //initializer function
     initColorArray(colorArray);
     asm("nop");
     
+    int i = 0;
+    for(i =0; i <40; i++){
+        if(i == 1 || i == 8 || i == 10 || i == 17){
+            diamond[i] = 2;
+        }
+        else if(i == 9) {
+            diamond[i] = 1;
+        }
+        else{
+            diamond[i] = 0;
+        }
+    }
+    
     return;
 }
 
@@ -53,6 +67,7 @@ void loop(void)
 {
     return;
 }
+
 
 int main(void) {
     setup(); //calls our setup function above to set leftEye and rightEye.
@@ -80,11 +95,41 @@ int main(void) {
     unsigned char flag = 1; //flag checks if eyes should be rewritten
     int xPos = 1;
     int yPos = 2;
+    int colorchoose = 0;
+    int shapechoose = 0;
+    int oldButtonC;
+    int oldButtonZ;
     int oldX, oldY,botLeftPix; //used to see if the eye has moved.
     unsigned char eyeCol = 0, oldEyeCol = 0;
+    
+    int displayArray[40];
+   
+    
     while (1) 
     {
         buttons = scanInputs();
+        
+        if (buttons.c) {
+            if(oldButtonC == 0){
+                colorchoose++;
+                flag = 1;
+            }
+            if(colorchoose > 2){
+                colorchoose = 0;
+            }
+        }
+        
+        oldButtonC = buttons.c;
+        if(buttons.z){
+            if(oldButtonZ == 0){
+                shapechoose++;
+                flag = 1;
+            }
+            if(shapechoose > 3){
+                shapechoose = 0;
+            }
+        }
+        oldButtonZ = buttons.z;
         
         xPos = ((buttons.joyX)-304)/211; //Maps joyX to 0-2
         if(xPos > 2)
@@ -95,67 +140,92 @@ int main(void) {
             yPos = 4; //ensures that yPos doesn't exceed 4
         yPos = 4 - yPos; // The joy stick reads down as max, so the "4-" maps down to min and up to max
         
-        //THIS SECTION WILL ASSEMBLE THE ARRAY - POSITION OF THE EYE
-        if(xPos!=oldX || yPos!=oldY) //checks if the eye has moved from its old position
-        {
-            botLeftPix = xPos*8+yPos; //botLeftPix represents the bottom left position of the iris
-            int i;
-            for(i=0; i<40; i++)
+        
+        //this is the regular square version:
+        if(shapechoose == 0){
+            //THIS SECTION WILL ASSEMBLE THE ARRAY - POSITION OF THE EYE
+            if(xPos!=oldX || yPos!=oldY) //checks if the eye has moved from its old position
             {
-                if((i>=botLeftPix && i<botLeftPix+4) || (i>=botLeftPix+8 && i<botLeftPix+12) || (i>=botLeftPix+16 && i<botLeftPix+20))
-                { //if statement is used to catch an index that is part of the iris or pupil which should be a color other than black
-                    if(i==botLeftPix+9 || i==botLeftPix+10) //this catches if the index is part of the pupil and sets it white
-                    {
-                        array[i]=1;
-                    }
-                    else    //otherwise the index is part of the iris and is set to the desired color.
-                    {
-                        array[i]=2;
-                    }
-                }
-                else //if an index is not part of the iris or pupil then it is sets to black
+                botLeftPix = xPos*8+yPos; //botLeftPix represents the bottom left position of the iris
+                int i;
+                for(i=0; i<40; i++)
                 {
-                    array[i]=0;
+                    if((i>=botLeftPix && i<botLeftPix+4) || (i>=botLeftPix+8 && i<botLeftPix+12) || (i>=botLeftPix+16 && i<botLeftPix+20))
+                    { //if statement is used to catch an index that is part of the iris or pupil which should be a color other than black
+                        if(i==botLeftPix+9 || i==botLeftPix+10) //this catches if the index is part of the pupil and sets it white
+                        {
+                            array[i]=1;
+                        }
+                        else    //otherwise the index is part of the iris and is set to the desired color.
+                        {
+                            array[i]=2;
+                        }
+                    }
+                    else //if an index is not part of the iris or pupil then it is sets to black
+                    {
+                        array[i]=0;
+                    }
                 }
+                flag = 1; //set the flag to rewrite to the matrices
+                oldX = xPos; //update old positions
+                oldY = yPos;
+                
             }
-            flag = 1; //set the flag to rewrite to the matrices
-            oldX = xPos; //update old positions
-            oldY = yPos;
+        }
+//         * THE MATRIX WRITES FROM THE BOTTEM LEFT UP. ONCE IT REACHES THE TOP IT LOOPS BACK TO THE NEXT LED ON THE BOTTOM
+// * 
+//  ----------------
+// | 07 15 23 31 39 |
+// | 06 14 22 30 38 |
+// | 05 13 21 29 37 |
+// | 04 12 20 28 36 |
+// | 03 11 19 27 35 |
+// | 02 10 18 26 34 |
+// | 01 09 17 25 33 |
+// | 00 08 16 24 32 |
+//  ----------------
+        else if (colorchoose == 1) { //diamond 
+            int i = 0;
+            int a =0;
+            //pupil = 1
+            //iris = 2
+            //else = 0;
+            for(i = 0; i < 40; i++){
+                a = (xPos*8)+(i + yPos);
+                if (a > 40) {
+                    a = a - 40;
+                    array[a] = 0;
+                }                    
+                else{
+                //for the iris
+                    array[a] = diamond[i];
+                }
+                
+            }
+            
         }
         
-        
-        //THIS SECTION SELECTS THE COLOR OF THE EYE
-        if(buttons.c) //if button c is pushed it will set eyeCol to 1
-        {
-            eyeCol = 1;
-        }
-        else if(buttons.z) //if button z is pushed it will set eyeCol to 2
-        {
-            eyeCol = 2;
-        }
-        else // otherwise eyeCol is 0
-        {
-            eyeCol = 0;
+        else if (colorchoose == 2) { //horizontal lines of color
+            int i = 0;
+            for (i = 0; i < 40;i++){
+                array[i] = i / 8; //5 groups 8...vertical stripes.
+            }
+            
         }
         
-        if(eyeCol != oldEyeCol)
-        {
-            flag = 1; //set the flag to rewrite to the matrices
-            oldEyeCol = eyeCol;
-        }
         
         if(flag) //if we should rewrite the matrices
         {
             flag = 0; //reset flag
             //use conditions for the correct eye color
-            if(eyeCol == 0)
+            if(colorchoose == 0)
             {
                 sendColor(&rightEye, blueEye, array);
                 __delay_ms(5);
                 sendColor(&leftEye, blueEye, array);
                 __delay_ms(5);
             }
-            else if(eyeCol == 1)
+            else if(colorchoose == 1)
             {
                 sendColor(&rightEye, redEye, array);
                 __delay_ms(5);
