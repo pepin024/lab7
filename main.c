@@ -50,11 +50,19 @@ unsigned char blank[40] = {     0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0, 0, 0, 0, 0, 0, 0};
-unsigned char stripes[40] = {   0, 0, 0, 0, 0, 0, 0, 0,
+
+unsigned char stripesLeft[40] ={0, 0, 0, 0, 0, 0, 0, 0,
                                 1, 1, 1, 1, 1, 1, 1, 1,
                                 2, 2, 2, 2, 2, 2, 2, 2,
                                 3, 3, 3, 3, 3, 3, 3, 3,
                                 4, 4, 4, 4, 4, 4, 4, 4};
+
+unsigned char stripesRight[40] = { 5, 5, 5, 5, 5, 5, 5, 5,
+                                   6, 6, 6, 6, 6, 6, 6, 6,
+                                   7, 7, 7, 7, 7, 7, 7, 7,
+                                   8, 8, 8, 8, 8, 8, 8, 8,
+                                   9, 9, 9, 9, 9, 9, 9, 9};
+
 
 
 void setup(void) { //initializer function
@@ -137,7 +145,8 @@ int main(void) {
     
     controllerData buttons;
     unsigned long int* colorPallete;
-    unsigned char* shapeArray;
+    unsigned char* shapeArrayLeft;
+    unsigned char* shapeArrayRight;
     
 
     int palleteChoose = 0;
@@ -197,13 +206,16 @@ int main(void) {
         ///////////////////////////////////////////////////////////////////
         //Choose apropriate shape
          if(shapeChoose == 0){
-            shapeArray = diamond;
+            shapeArrayLeft = diamond;
+            shapeArrayRight = diamond;
         }
         else if(shapeChoose == 1){
-            shapeArray = square;
+            shapeArrayLeft = square;
+            shapeArrayRight = square;
         }
         else{
-            shapeArray = stripes;
+            shapeArrayLeft = stripesLeft;
+            shapeArrayRight = stripesRight;
         }
         int i, j;
 
@@ -216,7 +228,7 @@ int main(void) {
                if(j < 0 ){
                    displayArray[i] = 0;
                } else {
-                displayArray[i] = shapeArray[j]; 
+                displayArray[i] = shapeArrayLeft[j]; 
                }
             }
 
@@ -233,7 +245,7 @@ int main(void) {
                 if(j < 0){
                     displayArray[i] = 0;
                 } else {
-                    displayArray[i] = shapeArray[j];
+                    displayArray[i] = shapeArrayRight[j];
                 }
             }
         }
