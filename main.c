@@ -96,35 +96,48 @@ int main(void) {
     while (1) 
     {
         int xShift, yShift;
+        buttons = scanInputs();
         
-        for(yShift = 0; yShift < 8; ++yShift){
-        
+        xShift = ((buttons.joyX) - 304)/211;
+        yShift = ((buttons.joyY) - 322)/123;
 
-            int i, j;
+        int i, j;
 
-            for(i = 39; i >= 0; --i){
-                j = i - yShift;
-                if(j < 0 || ((j/8) != (i/8))){
-                    displayArray[i] = 0;
-                } else {
-                   displayArray[i] = square[j]; 
-                }
-                
+        for(i = 39; i >= 0; --i){
+            j = i - yShift;
+            if(j < 0 || ((j/8) != (i/8))){
+                displayArray[i] = 0;
+            } else {
+               j -= xShift * 8;
+               if(j < 0 ){
+                   displayArray[i] = 0;
+               } else {
+                displayArray[i] = square[j]; 
+               }
             }
-            sendColor(&leftEye, redEye, displayArray);
 
-            for(i = 39; i >= 0; --i){
-                j = i - yShift;
-                if(j < 0 || ((j/8) != (i/8))){
+        }
+        sendColor(&leftEye, redEye, displayArray);
+
+
+        for(i = 39; i >= 0; --i){
+            j = i - yShift;
+            if(j < 0 || ((j/8) != (i/8))){
+                displayArray[i] = 0;
+            } else {
+                j -= xShift * 8;
+                if(j < 0){
                     displayArray[i] = 0;
                 } else {
                     displayArray[i] = diamond[j];
                 }
             }
-            sendColor(&rightEye, redEye, displayArray);
-
-            __delay_ms(1000);
         }
+        sendColor(&rightEye, redEye, displayArray);
+
+
+        __delay_ms(200);
+       
     }
 }
    
