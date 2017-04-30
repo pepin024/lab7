@@ -89,6 +89,7 @@ int main(void) {
     setBrightness(&leftEye, 60);
     
     controllerData buttons;
+    unsigned long int* colorPallete;
     
 
    
@@ -100,6 +101,10 @@ int main(void) {
         
         xShift = ((buttons.joyX) - 304)/211;
         yShift = ((buttons.joyY) - 322)/123;
+        if(buttons.c)
+            colorPallete = redEye;
+        else
+            colorPallete = blueEye;
 
         int i, j;
 
@@ -117,7 +122,7 @@ int main(void) {
             }
 
         }
-        sendColor(&leftEye, redEye, displayArray);
+        sendColor(&leftEye, colorPallete, displayArray);
 
 
         for(i = 39; i >= 0; --i){
@@ -133,7 +138,7 @@ int main(void) {
                 }
             }
         }
-        sendColor(&rightEye, redEye, displayArray);
+        sendColor(&rightEye, colorPallete, displayArray);
 
 
         __delay_ms(200);

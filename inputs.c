@@ -5,6 +5,7 @@
 #include <p24Fxxxx.h>
 #include <xc.h>
 #include <libpic30.h>
+#include <p24FJ64GA002.h>
 #include "inputs.h"
 
 #define NUMOFSAMPLES 5
@@ -52,9 +53,18 @@ controllerData scanInputs(){
     int sample = 0;
     int xJoystickSum = 0;
     int yJoystickSum = 0;
+    int n = 0;
     
     foo.c = !PORTBbits.RB7;
     foo.z = !PORTBbits.RB8;
+    while(n < 4){
+        if((!PORTBbits.RB7 == foo.c) && (!PORTBbits.RB8 == foo.z))
+            n++;
+        
+        foo.c = !PORTBbits.RB7;
+        foo.z = !PORTBbits.RB8;
+        __delay_us(10);
+    }
     
    //below is to return the average of 5 samples of foo.joyX and foo.joyY:
     //method 1 : change the AD1CON2bits.SMPI to = 0b1010 to interrupt at every 10 samples. -- NO --I DIDNT USE THIS... IT WOULDNT WORK
