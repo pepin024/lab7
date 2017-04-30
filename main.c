@@ -88,22 +88,46 @@ int main(void) {
         setIndexPacked(0, 0, 0, 0, blueEye);
         setIndexPacked(1, 255, 255, 255, blueEye); //each eye has index 0 and 1 as black and white since those will be needed for every eye color
         setIndexPacked(2, 0, 0, 255, blueEye);      //the last index is reserved for whatever color the eye is to be
-        for(i = 4; i < 16; i++){
-            setIndexPacked(i, 0,0,0, blueEye);
-        }
+        setIndexPacked(3, 255, 51, 153, blueEye);
+        setIndexPacked(4, 102, 0, 204, blueEye);
+        setIndexPacked(5, 0, 204, 204, blueEye);
+        setIndexPacked(6, 255, 255, 0, blueEye);
+        setIndexPacked(7, 255, 0, 0, blueEye);
+        setIndexPacked(8, 0, 153, 76, blueEye);
+        setIndexPacked(9, 255, 102, 102, blueEye);
+        setIndexPacked(10, 255, 128, 0, blueEye);
+        setIndexPacked(11, 0, 255, 0, blueEye);
+        setIndexPacked(12, 76, 0, 153, blueEye);
+        setIndexPacked(13, 76, 153, 0, blueEye);
+        setIndexPacked(14, 51, 255, 153, blueEye);
+        setIndexPacked(15, 102, 51, 0, blueEye);
+        
                 
     unsigned long int redEye[16];
         setIndexPacked(0, 0, 0, 0, redEye);
         setIndexPacked(1, 255, 255, 255, redEye);
         setIndexPacked(2, 255, 0, 0, redEye); 
-        for(i = 4; i < 16; i++){
+        setIndexPacked(3, 0, 245, 255, redEye);
+        setIndexPacked(4, 0,139, 43, redEye);
+        setIndexPacked(5, 255, 236, 139, redEye );
+        setIndexPacked(6, 238, 130, 238, redEye);
+        setIndexPacked(7, 193, 255, 193, redEye);
+        setIndexPacked(8, 93, 71, 139, redEye);
+        setIndexPacked(9, 237, 145, 33, redEye);
+        for(i = 10; i < 16; i++){
             setIndexPacked(i,0,0,0,redEye);
         }
     unsigned long int yellowEye[16];
         setIndexPacked(0, 0, 0, 0, yellowEye);
         setIndexPacked(1, 255, 255, 255, yellowEye);
         setIndexPacked(2, 255, 255, 0, yellowEye);
-        for(i = 4; i < 16; i++){
+        setIndexPacked(4, 142, 142, 56, yellowEye);
+        setIndexPacked(5, 84, 139, 84, yellowEye);
+        setIndexPacked(6, 50, 100, 250, yellowEye);
+        setIndexPacked(7, 130, 233, 17, yellowEye);
+        setIndexPacked(8, 0, 255, 30, yellowEye);
+        setIndexPacked(9, 140, 70, 80 ,yellowEye);
+        for(i = 10; i < 16; i++){
             setIndexPacked(i,0,0,0,yellowEye);
         }
     unsigned long int palleteFour[16];

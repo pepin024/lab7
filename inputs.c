@@ -60,6 +60,8 @@ controllerData scanInputs(){
     while(n < 4){
         if((!PORTBbits.RB7 == foo.c) && (!PORTBbits.RB8 == foo.z))
             n++;
+        else
+            n = 0;
         
         foo.c = !PORTBbits.RB7;
         foo.z = !PORTBbits.RB8;
