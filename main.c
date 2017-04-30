@@ -137,6 +137,7 @@ int main(void) {
     
     controllerData buttons;
     unsigned long int* colorPallete;
+    unsigned char* shapeArray;
     
 
     int palleteChoose = 0;
@@ -159,7 +160,7 @@ int main(void) {
         
         if((prevShapeBut != buttons.c) && buttons.c){
             shapeChoose++;
-            if(shapeChoose > 3){
+            if(shapeChoose > 2){
                 shapeChoose = 0;
             }
         }
@@ -174,6 +175,9 @@ int main(void) {
         prevPalBut = buttons.z;
         prevShapeBut = buttons.c;
         
+        
+        /////////////////////////////////////////////////////////////////////
+        //Choose the appropriate color pallete
         if(palleteChoose == 0){
             colorPallete = blueEye;
         }
@@ -190,6 +194,17 @@ int main(void) {
             colorPallete = palleteFive;
         }
 
+        ///////////////////////////////////////////////////////////////////
+        //Choose apropriate shape
+         if(shapeChoose == 0){
+            shapeArray = diamond;
+        }
+        else if(shapeChoose == 1){
+            shapeArray = square;
+        }
+        else{
+            shapeArray = stripes;
+        }
         int i, j;
 
         for(i = 39; i >= 0; --i){
@@ -201,7 +216,7 @@ int main(void) {
                if(j < 0 ){
                    displayArray[i] = 0;
                } else {
-                displayArray[i] = square[j]; 
+                displayArray[i] = shapeArray[j]; 
                }
             }
 
@@ -218,7 +233,7 @@ int main(void) {
                 if(j < 0){
                     displayArray[i] = 0;
                 } else {
-                    displayArray[i] = diamond[j];
+                    displayArray[i] = shapeArray[j];
                 }
             }
         }
