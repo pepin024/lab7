@@ -29,28 +29,21 @@ void initColorArray(unsigned long int ac[]) //initializes array to 16 basic colo
     setIndexPacked(15, 255, 255, 255, ac); //WHITE
 }
 
-/*void setIndex(unsigned char index, char red, char grn, char blu)
-{
-    colorArray[index][0] = red;
-    colorArray[index][1] = grn;
-    colorArray[index][2] = blu;
-}*/
-
 void setIndexPacked(unsigned char index, unsigned char red, unsigned char grn, unsigned char blu, unsigned long int ac[])
-{
+{  //takes in values for red, green, and blue and converts them to a single long to be stored in the specified index of the color palette that is passed in
     ac[index] = ((long) red << 16) | ((long)grn << 8) | ((long) blu);
 }
 
-unsigned char getR(unsigned char index, unsigned long int ac[])
+unsigned char getR(unsigned char index, unsigned long int ac[]) //takes a long from the color palette and pulls out the red value
 {
     return (unsigned char)(ac[index] >> 16);
 }
 
-unsigned char getG(unsigned char index, unsigned long int ac[])
+unsigned char getG(unsigned char index, unsigned long int ac[])//takes a long from the color palette and pulls out the green value
 {
     return (unsigned char)(ac[index] >> 8);
 }
-unsigned char getB(unsigned char index , unsigned long int ac[])
+unsigned char getB(unsigned char index , unsigned long int ac[])//takes a long from the color palette and pulls out the blue value
 {
     return (unsigned char)(ac[index]);
 }
